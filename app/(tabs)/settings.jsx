@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Pressable } from "react-native";
+import { Text, View, StyleSheet, Pressable, Linking } from "react-native";
 import { Link } from "expo-router";
 
 export default function Settings() {
@@ -9,7 +9,26 @@ export default function Settings() {
                     <Text style={styles.buttonText}>How To Use</Text>
                 </Pressable>
             </Link>
-            
+            <Link 
+                href='mailto:wetcementstudios@gmail.com?subject=FeedBack'
+                style={{ marginHorizontal: 'auto' }}
+                asChild
+            >
+                <Pressable style={styles.button}>
+                    <Text style={styles.buttonText}>FeedBack</Text>
+                </Pressable>
+            </Link>
+            <Link href="https://github.com/ZeusyBoy98/FlyRight/issues" style={{ marginHorizontal: 'auto'}} asChild>
+                <Pressable style={styles.button}>
+                    <Text style={styles.buttonText}>Report A Bug</Text>
+                </Pressable>
+            </Link>
+            <Text style={{color: 'gray', marginTop: 30, marginBottom: 3}}>Support The Developer</Text>
+            <Link href="https://buymeacoffee.com/zeusyboy" style={{ marginHorizontal: 'auto' }} asChild>
+                <Pressable style={styles.button}>
+                    <Text style={styles.buttonText}>Buy Me A Coffee</Text>
+                </Pressable>
+            </Link>
         </View>
     );
 }
@@ -31,7 +50,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         padding: 6,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginBottom: 10,
     },
     buttonText: {
         color: 'black',

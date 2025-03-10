@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "FlyRight",
-    "slug": "FlyRight",
+    "slug": "flyright",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -36,6 +36,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "3f691559-81c2-460e-9ee2-ffb26a6a1217"
+      }
+    },
+    "owner": "zeusyboy"
   }
 }

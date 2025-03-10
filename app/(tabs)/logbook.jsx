@@ -3,7 +3,7 @@ import { Text, View, StyleSheet } from "react-native";
 export default function LogBook() {
     return (
         <View style={styles.container}>
-
+            
         </View>
     );
 }
