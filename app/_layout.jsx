@@ -8,6 +8,7 @@ export default function RootLayout() {
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="howtouse" options={{headerTitle: "How To Use", headerBackTitle: "Settings", headerStyle: {backgroundColor: "#202020"}, headerTitleStyle: {color: "white"}}} />
+        <Stack.Screen name="logs/[id]" options={{headerShown: false}} />
       </Stack>
     </SafeAreaProvider>
   );

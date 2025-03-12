@@ -9,7 +9,7 @@ import { useRouter } from "expo-router";
 import * as Haptics from 'expo-haptics';
 
 export default function LogBook() {
-    const [todos, setTodos] = useState([]);
+    const [logs, setLogs] = useState([]);
     const [text, setText] = useState('');
     const router = useRouter();
 
@@ -17,11 +17,11 @@ export default function LogBook() {
         const fetchData = async () => {
           try {
             const jsonValue = await AsyncStorage.getItem("Logs")
-            const storageTodos = jsonValue != null ? JSON.parse(jsonValue) : null
-            if (storageTodos && storageTodos.length) {
-              setTodos(storageTodos.sort((a,b) => b.id - a.id))
+            const storageLogs = jsonValue != null ? JSON.parse(jsonValue) : null
+            if (storageLogs && storageLogs.length) {
+              setLogs(storageLogs.sort((a,b) => b.id - a.id))
             } else {
-              setTodos(data.sort((a,b) => b.id - a.id))
+              setLogs(data.sort((a,b) => b.id - a.id))
             }
           } catch (e) {
             console.error(e)
@@ -40,7 +40,7 @@ export default function LogBook() {
           }
         }
         storeData()
-    }, [data])
+    }, [logs])
 
     const handlePress = (id) => {
         router.push(`/logs/${id}`)
@@ -61,9 +61,9 @@ export default function LogBook() {
     return (
         <SafeAreaView style={styles.container}>
             <Animated.FlatList
-            data={data}
+            data={logs}
             renderItem={renderItem}
-            keyExtractor={loog => loog.id}
+            keyExtractor={item => item.id.toString()}
             contentContainerStyle={{ flexGrow: 1,}}
             itemLayoutAnimation={LinearTransition}
             />
@@ -89,13 +89,13 @@ const styles = StyleSheet.create({
     logItem: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         padding: 10,
         borderRadius: 10,
         borderColor: 'gray',
         borderWidth: 1,
         width: "100%",
-        maxWidth: 600,
+        maxWidth: 1024,
         marginHorizontal: 'auto',
         marginTop: 10,
     },
