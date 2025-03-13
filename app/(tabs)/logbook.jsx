@@ -1,76 +1,62 @@
-import { Text, View, TextInput, Pressable, StyleSheet, FlatList } from "react-native";
+import { Text, View, Pressable, StyleSheet, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState, useEffect } from 'react';
-import { data } from "@/data/logs";
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import Animated, { LinearTransition } from "react-native-reanimated";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
-import * as Haptics from 'expo-haptics';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import Animated, { LinearTransition } from "react-native-reanimated";
 
 export default function LogBook() {
     const [logs, setLogs] = useState([]);
-    const [text, setText] = useState('');
     const router = useRouter();
 
     useEffect(() => {
         const fetchData = async () => {
-          try {
-            const jsonValue = await AsyncStorage.getItem("Logs")
-            const storageLogs = jsonValue != null ? JSON.parse(jsonValue) : null
-            if (storageLogs && storageLogs.length) {
-              setLogs(storageLogs.sort((a,b) => b.id - a.id))
-            } else {
-              setLogs(data.sort((a,b) => b.id - a.id))
+            try {
+                const jsonValue = await AsyncStorage.getItem("Logs");
+                const storageLogs = jsonValue ? JSON.parse(jsonValue) : [];
+                setLogs(storageLogs.sort((a, b) => b.id - a.id));
+            } catch (e) {
+                console.error(e);
             }
-          } catch (e) {
-            console.error(e)
-          }
-        }
-        fetchData()
-    }, [data])
-
-    useEffect(() => {
-        const storeData = async () => {
-          try {
-            const jsonValue = JSON.stringify(data)
-            await AsyncStorage.setItem("Logs", jsonValue)
-          } catch (e) {
-            console.error(e)
-          }
-        }
-        storeData()
-    }, [logs])
+        };
+        fetchData();
+    }, []);
 
     const handlePress = (id) => {
-        router.push(`/logs/${id}`)
-    }
+        router.push(`/logs/${id}`);
+    };
 
     const renderItem = ({ item }) => (
         <View style={styles.logItem}>
-          <Pressable 
-          onPress={() => handlePress(item.id)} 
-          >
-            <View style={styles.logContainer}>
-                <Text style={styles.dateText}>{item.date}</Text><Text style={styles.titleText}>{item.title}</Text>
-            </View>
-          </Pressable>
+            <Pressable onPress={() => handlePress(item.id)}>
+                <View style={styles.logContainer}>
+                    <Text style={styles.dateText}>{item.date}</Text>
+                    <Text style={styles.titleText}>{item.title}</Text>
+                </View>
+            </Pressable>
         </View>
-    )
+    );
 
     return (
         <SafeAreaView style={styles.container}>
             <Animated.FlatList
-            data={logs}
-            renderItem={renderItem}
-            keyExtractor={item => item.id.toString()}
-            contentContainerStyle={{ flexGrow: 1,}}
-            itemLayoutAnimation={LinearTransition}
+                data={logs}
+                renderItem={renderItem}
+                keyExtractor={(item) => item.id.toString()}
+                contentContainerStyle={{ flexGrow: 1 }}
+                itemLayoutAnimation={LinearTransition}
             />
-            <Pressable onPress={""} style={styles.addButton}>
-                <MaterialCommunityIcons name="plus-circle" size={60} color="white" selectable={undefined}/>
+            <Pressable 
+                onPress={() => {
+                    const newId = logs.length > 0 ? Math.max(...logs.map(log => log.id)) + 1 : 1;
+                    router.push(`/createlog/${newId}`);
+                }} 
+                style={styles.addButton}
+            >
+                <MaterialCommunityIcons name="plus-circle" size={60} color="white" />
             </Pressable>
-    </SafeAreaView>
+        </SafeAreaView>
     );
 }
 
@@ -105,6 +91,6 @@ const styles = StyleSheet.create({
     },
     titleText: {
         fontSize: 30,
-        color: "rgb(150, 239, 255)"
+        color: "rgb(150, 239, 255)",
     },
-})
+});
