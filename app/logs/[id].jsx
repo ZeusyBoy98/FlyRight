@@ -1,11 +1,15 @@
 import { useLocalSearchParams } from "expo-router";
-import { Text, View, StyleSheet, Pressable, ScrollView } from "react-native";
+import { Text, View, StyleSheet, Pressable, ScrollView, Appearance } from "react-native";
 import { useState, useEffect } from 'react';
+import { colors } from "@/data/colors";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import * as Haptics from 'expo-haptics';
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+
+const colorScheme = Appearance.getColorScheme();
+let theme = colors[colorScheme];
 
 export default function ViewLog() {
     const { id } = useLocalSearchParams();
@@ -45,12 +49,18 @@ export default function ViewLog() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.titleText}>{log?.title}</Text>
+            <View style={{flexDirection: "row", justifyContent: "center", width: "100%", gap: 30, borderBottomColor: "gray", borderBottomWidth: 1,}}>
+                <Text style={styles.titleText}>{log?.title}</Text>
+                <Text style={styles.dateText}>{log?.date}</Text>
+            </View>
+            <Text><Text style={styles.placeText}>{log?.departure}</Text><Text style={styles.placeText}> - </Text><Text style={styles.placeText}>{log?.arrival}</Text></Text>
+            <Text style={styles.placeText}>{log?.plane}</Text>
+            <View style={{width: "70%", height: 10, borderBottomColor: "gray", borderBottomWidth: 1}}></View>
             <ScrollView style={styles.scrollView} contentContainerStyle={{ alignItems: 'center' }}>
                 <View style={styles.textContainer}>
                     <Text style={styles.text}>{log?.text}</Text>
                 </View>
-                <View style={{ flexDirection: "row", gap: 30 }}>
+                <View style={{ flexDirection: "row", gap: 30, marginBottom: 100,}}>
                     <Pressable onPress={removeLog}>
                         <MaterialCommunityIcons name="delete" size={43} color="red" />
                     </Pressable>
@@ -67,7 +77,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         width: "100%",
-        backgroundColor: "#333333",
+        backgroundColor: theme.background,
         alignItems: 'center'
     },
     scrollView: {
@@ -75,35 +85,41 @@ const styles = StyleSheet.create({
         width: "100%",
     },
     exitButton: {
-        backgroundColor: "white",
+        backgroundColor: theme.exitButton,
         borderRadius: 5,
         padding: 10,
         paddingHorizontal: 30,
         marginBottom: 20,
     },
     exitButtonText: {
+        fontFamily: theme.font,
         fontSize: 18,
         color: "black",
     },
     titleText: {
-        color: "rgb(150, 239, 255)",
-        fontSize: 40,
-        marginTop: "10%",
+        color: theme.highlight,
+        fontSize: 30,
+        fontFamily: theme.font,
+        marginTop: 42,
         paddingBottom: 10,
-        borderBottomColor: "black",
-        borderBottomWidth: 3,
-        borderBottomLeftRadius: 5,
-        borderBottomRightRadius: 5,
+    },
+    placeText: {
+        fontFamily: theme.font,
+        color: "gray",
+        fontSize: 20,
+    },
+    dateText: {
+        fontFamily: theme.font,
+        color: theme.text,
+        fontSize: 30,
+        marginTop: 42,
     },
     text: {
-        color: "black",
+        fontFamily: theme.font,
+        color: theme.text,
         fontSize: 18,
     },
     textContainer: {
-        borderColor: "black",
-        backgroundColor: "white",
-        borderWidth: 2,
-        borderRadius: 20,
         padding: 10,
         maxWidth: "100%",
         marginVertical: 10,

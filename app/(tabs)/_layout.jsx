@@ -1,17 +1,22 @@
 import { Tabs } from 'expo-router';
+import { colors } from "@/data/colors";
+import { Appearance } from 'react-native';
 import React from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
+const colorScheme = Appearance.getColorScheme();
+let theme = colors[colorScheme];
+
 export default function TabLayout() {
     return (
       <Tabs
         screenOptions={{
-          tabBarLabelStyle: { color: "white", size: 50,},
+          tabBarLabelStyle: { color: theme.text, size: 50, fontFamily: theme.font },
           headerShown: false,
-          tabBarStyle: { height: 70, backgroundColor: "#202020", elevation: 0, shadowOpacity: 0, borderTopWidth: 0, },
-          backgroundColor: "#333333",
+          tabBarStyle: { paddingTop: 5, height: 80, backgroundColor: theme.tabBar, elevation: 0, shadowOpacity: 0, borderTopWidth: 0, },
+          backgroundColor: theme.background,
         }}>
         <Tabs.Screen
             name="checklists"
@@ -19,7 +24,7 @@ export default function TabLayout() {
                 title: "Checklists",
                 size: 40,
                 tabBarIcon: ({ focused }) => (
-                    <FontAwesome6 name={focused ? "clipboard-list" : "clipboard"} size={28} color={focused ? "rgba(56, 228, 249, 1)" : "rgb(204, 247, 255)"} />
+                    <FontAwesome6 name="clipboard" size={28} color={focused ? theme.highlight : theme.unHighlight} />
                 ),
             }} 
         ></Tabs.Screen>
@@ -29,7 +34,7 @@ export default function TabLayout() {
                 title: "LogBook",
                 size: 40,
                 tabBarIcon: ({ focused }) => (
-                    <MaterialCommunityIcons name={focused ? "book-open-variant" : "book-open-blank-variant"} size={30} color={focused ? "rgba(56, 228, 249, 1)" : "rgb(204, 247, 255)"} />
+                    <MaterialCommunityIcons name="book-open-variant" size={30} color={focused ? theme.highlight : theme.unHighlight} />
                 ),
             }} 
         ></Tabs.Screen>
@@ -39,7 +44,7 @@ export default function TabLayout() {
             title: "Home",
             size: 40,
             tabBarIcon: ({ focused }) => (
-                <Ionicons name={focused ? "airplane" : "airplane-outline"} size={30} color={focused ? "rgba(56, 228, 249, 1)" : "rgb(204, 247, 255)"} />
+                <Ionicons name="airplane-outline" size={30} color={focused ? theme.highlight : theme.unHighlight} />
             ),
           }}
         ></Tabs.Screen>
@@ -49,7 +54,7 @@ export default function TabLayout() {
                 title: "ATC",
                 size: 40,
                 tabBarIcon: ({ focused }) => (
-                    <Ionicons name={focused ? "headset" : "headset-outline"} size={30} color={focused ? "rgba(56, 228, 249, 1)" : "rgb(204, 247, 255)"} />
+                    <Ionicons name="headset-outline" size={30} color={focused ? theme.highlight : theme.unHighlight} />
                 ),
             }} 
         ></Tabs.Screen>
@@ -59,7 +64,7 @@ export default function TabLayout() {
                 title: "Settings",
                 size: 40,
                 tabBarIcon: ({ focused }) => (
-                    <Ionicons name={focused ? "settings" : "settings-outline"} size={30} color={focused ? "rgba(56, 228, 249, 1)" : "rgb(204, 247, 255)"} />
+                    <Ionicons name="settings-outline" size={30} color={focused ? theme.highlight : theme.unHighlight} />
                 ),
             }} 
         ></Tabs.Screen>

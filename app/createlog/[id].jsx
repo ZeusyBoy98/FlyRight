@@ -1,17 +1,24 @@
-import { Text, View, TextInput, Pressable, StyleSheet, ScrollView, KeyboardAvoidingView, TouchableWithoutFeedback } from "react-native";
+import { Text, View, TextInput, Appearance, Pressable, StyleSheet, ScrollView, KeyboardAvoidingView, TouchableWithoutFeedback } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState, useEffect } from 'react';
 import { data } from "@/data/logs";
+import { colors } from "@/data/colors";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Animated, { LinearTransition } from "react-native-reanimated";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import * as Haptics from 'expo-haptics';
 
+const colorScheme = Appearance.getColorScheme();
+let theme = colors[colorScheme];
+
 export default function CreateLog() {
     const [title, setTitle] = useState("");
     const [text, setText] = useState("");
+    const [arrival, setArrival] = useState("");
+    const [departure, setDeparture] = useState("");
     const [date, setDate] = useState("");
+    const [plane, setPlane] = useState("");
     const [logs, setLogs] = useState([]);
     const router = useRouter();
 
@@ -35,7 +42,7 @@ export default function CreateLog() {
             const newId = highestId + 1;
     
             const newLogs = [
-                { id: newId, title, date, text, completed: false },
+                { id: newId, title, arrival, departure, plane, date, text, completed: false },
                 ...logs,
             ];
             setLogs(newLogs);
@@ -47,7 +54,10 @@ export default function CreateLog() {
             }
     
             setTitle("");
+            setArrival("");
+            setDeparture("");
             setDate("");
+            setPlane("")
             setText("");
         }
         router.push('/(tabs)/logbook');
@@ -68,11 +78,38 @@ export default function CreateLog() {
                         onChangeText={setTitle}
                     />
                 </View>
+                <View style={{flexDirection: "row",}}>
+                    <TextInput
+                    style={styles.dateInput}
+                    maxLength={4}
+                    placeholder="Dep"
+                    placeholderTextColor="gray"
+                    value={departure}
+                    onChangeText={setDeparture}
+                    />
+                    <Text style={{color: "gray", fontSize: 36}}> - </Text>
+                    <TextInput
+                    style={styles.dateInput}
+                    maxLength={4}
+                    placeholder="Arr"
+                    placeholderTextColor="gray"
+                    value={arrival}
+                    onChangeText={setArrival}
+                    />
+                    <TextInput
+                    style={[styles.dateInput, styles.planeInput]}
+                    maxLength={8}
+                    placeholder="Aircraft"
+                    placeholderTextColor="gray"
+                    value={plane}
+                    onChangeText={setPlane}
+                    />
+                </View>
                 <View>
-                    <Text style={styles.dateFormat}>Format: xx/xx/xx</Text>
+                    <Text style={styles.dateFormat}>Format: xx/xx/xxxx</Text>
                     <TextInput
                         style={styles.dateInput}
-                        maxLength={8}
+                        maxLength={10}
                         placeholder="Date"
                         placeholderTextColor="gray"
                         value={date}
@@ -90,12 +127,12 @@ export default function CreateLog() {
                             multiline={true}
                         />
                     </View>
-                    <View style={{ flexDirection: "row", gap: 30 }}>
+                    <View style={{ flexDirection: "row", gap: 30, marginBottom: 10, }}>
                         <Pressable onPress={() => router.push('/(tabs)/logbook')} style={styles.cancelButton}>
-                            <Text style={{ fontSize: 20, color: "white" }}>Cancel</Text>
+                            <Text style={{ fontSize: 20, color: "white", fontFamily: theme.font, }}>Cancel</Text>
                         </Pressable>
                         <Pressable onPress={addLog} style={styles.createButton}>
-                            <Text style={{ fontSize: 20 }}>Create</Text>
+                            <Text style={{ fontSize: 20, fontFamily: theme.font, }}>Create</Text>
                         </Pressable>
                     </View>
                 </ScrollView>
@@ -107,14 +144,15 @@ export default function CreateLog() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#333333",
+        backgroundColor: theme.background,
         alignItems: "center",
     },
     heading: {
-        color: "rgb(150, 239, 255)",
+        color: theme.highlight,
+        fontFamily: theme.font,
         fontSize: 50,
         borderBottomWidth: 3,
-        borderBottomColor: "black",
+        borderBottomColor: theme.text,
         borderBottomLeftRadius: 10,
         borderBottomRightRadius: 10,
         marginTop: "10%",
@@ -122,34 +160,41 @@ const styles = StyleSheet.create({
         paddingBottom: 5,
     },
     titleInput: {
-        backgroundColor: "rgba(0,0,0,0.5)",
-        color: "white",
+        backgroundColor: theme.inputBackground,
+        color: theme.text,
+        fontFamily: theme.font,
         fontSize: 30,
-        borderColor: "black",
-        borderWidth: 3,
+        borderColor: "gray",
+        borderWidth: 1,
         borderRadius: 5,
         padding: 10,
         marginBottom: 10,
     },
     dateFormat: {
-        color: "white",
+        color: theme.text,
+        fontFamily: theme.font,
     },
     dateInput: {
-        backgroundColor: "rgba(0,0,0,0.5)",
-        color: "white",
+        backgroundColor: theme.inputBackground,
+        color: theme.text,
+        fontFamily: theme.font,
         fontSize: 20,
-        borderColor: "black",
-        borderWidth: 3,
+        borderColor: "gray",
+        borderWidth: 1,
         borderRadius: 5,
         padding: 10,
         marginBottom: 10,
     },
+    planeInput: {
+        marginLeft: "5%"
+    },
     textInput: {
-        backgroundColor: "rgba(0,0,0,0.5)",
-        color: "white",
+        backgroundColor: theme.inputBackground,
+        color: theme.text,
+        fontFamily: theme.font,
         fontSize: 18,
-        borderColor: "black",
-        borderWidth: 3,
+        borderColor: "gray",
+        borderWidth: 1,
         borderRadius: 5,
         padding: 10,
         minWidth: "95%",

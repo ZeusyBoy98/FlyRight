@@ -1,5 +1,9 @@
-import { Text, View, StyleSheet, ImageBackground } from "react-native";
+import { Text, View, StyleSheet, ImageBackground, Appearance } from "react-native";
+import { colors } from "@/data/colors";
 import homepageImage from "@/assets/images/homepage.png";
+
+const colorScheme = Appearance.getColorScheme();
+let theme = colors[colorScheme];
 
 export default function Index() {
   return (
@@ -19,7 +23,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: "#333333"
+    backgroundColor: theme.background,
   },
   image: {
     width: "100%",
@@ -30,14 +34,15 @@ const styles = StyleSheet.create({
   },
   heading: {
     color: "white",
-    fontSize: 50,
+    fontFamily: theme.font,
     fontWeight: "bold",
+    fontSize: 50,
     textAlign: "center",
   },
   textContainer: {
     flexDirection: "row", // Places text side by side
     gap: 0, // Adds spacing between them
-    backgroundColor: "rgba(0,0,0,0.5)",
+    backgroundColor: theme.homeTrans,
     padding: 10,
     borderRadius: 10,
     alignItems: "center",
@@ -45,13 +50,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 100,
   },
   right: {
-    color: "rgba(56, 228, 249, 1)",
-    fontSize: 50,
+    color: theme.highlight,
+    fontFamily: theme.font,
     fontWeight: "bold",
+    fontSize: 50,
     textAlign: "center",
   },
   credit: {
     color: "white",
+    fontFamily: theme.font,
     alignSelf: "center",
     position: "absolute",
     bottom: 0,

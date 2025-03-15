@@ -1,13 +1,20 @@
-import { Text, View, Pressable, StyleSheet, FlatList } from "react-native";
+import { Text, View, Pressable, StyleSheet, FlatList, Appearance, TextInput } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState, useEffect } from 'react';
+import { colors } from "@/data/colors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Animated, { LinearTransition } from "react-native-reanimated";
+import filter from "lodash.filter";
+
+const colorScheme = Appearance.getColorScheme();
+let theme = colors[colorScheme];
 
 export default function LogBook() {
     const [logs, setLogs] = useState([]);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [fullData, setFullData] = useState([]);
     const router = useRouter();
 
     useEffect(() => {
@@ -16,6 +23,8 @@ export default function LogBook() {
                 const jsonValue = await AsyncStorage.getItem("Logs");
                 const storageLogs = jsonValue ? JSON.parse(jsonValue) : [];
                 setLogs(storageLogs.sort((a, b) => b.id - a.id));
+
+                setFullData(storageLogs);
             } catch (e) {
                 console.error(e);
             }
@@ -27,35 +36,62 @@ export default function LogBook() {
         router.push(`/logs/${id}`);
     };
 
+    const handleSearch = (query) => {
+        setSearchQuery(query);
+        const formattedQuery = query.toLowerCase();
+        const filteredData = filter(fullData, (log) => {
+            return contains(log, formattedQuery);
+        });
+        setLogs(filteredData);
+    };
+
+    const contains = ({title, date, departure, arrival, plane, text}, query) => {
+        if(title.toLowerCase().includes(query) || departure.toLowerCase().includes(query) || arrival.toLowerCase().includes(query) || date.toLowerCase().includes(query) || plane.toLowerCase().includes(query) || text.toLowerCase().includes(query)) {
+            return true;
+        }
+
+        return false;
+    }
+
     const renderItem = ({ item }) => (
-        <View style={styles.logItem}>
-            <Pressable onPress={() => handlePress(item.id)}>
-                <View style={styles.logContainer}>
-                    <Text style={styles.dateText}>{item.date}</Text>
-                    <Text style={styles.titleText}>{item.title}</Text>
-                </View>
-            </Pressable>
-        </View>
+        <Pressable onPress={() => handlePress(item.id)} style={styles.logItem}>
+            <View style={styles.logContainer}>
+                <Text style={styles.titleText}>{item.title}</Text>
+                <Text style={styles.dateText}>{item.date}</Text>
+            </View>
+        </Pressable>
     );
 
     return (
         <SafeAreaView style={styles.container}>
-            <Animated.FlatList
-                data={logs}
-                renderItem={renderItem}
-                keyExtractor={(item) => item.id.toString()}
-                contentContainerStyle={{ flexGrow: 1 }}
-                itemLayoutAnimation={LinearTransition}
-            />
-            <Pressable 
+            <View style={{flexDirection: "row", gap: 10}}>
+                <TextInput 
+                placeholder='Search' 
+                autoCapitalize="none" 
+                autoCorrect={false} 
+                color={theme.text}
+                clearButtonMode='always' 
+                style={styles.search}
+                value={searchQuery}
+                fontSize={24}
+                onChangeText={(query) => handleSearch(query)}
+                />
+                <Pressable 
                 onPress={() => {
                     const newId = logs.length > 0 ? Math.max(...logs.map(log => log.id)) + 1 : 1;
                     router.push(`/createlog/${newId}`);
                 }} 
-                style={styles.addButton}
-            >
-                <MaterialCommunityIcons name="plus-circle" size={60} color="white" />
-            </Pressable>
+                >
+                    <MaterialCommunityIcons name="plus-circle" size={50} color={theme.addButton} />
+                </Pressable>
+            </View>
+            <Animated.FlatList
+                data={logs}
+                renderItem={renderItem}
+                keyExtractor={(item) => item.id}
+                contentContainerStyle={{ flexGrow: 1 }}
+                itemLayoutAnimation={LinearTransition}
+            />
         </SafeAreaView>
     );
 }
@@ -63,34 +99,42 @@ export default function LogBook() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'column',
-        backgroundColor: "#333333",
+        backgroundColor: theme.background,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    search: {
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        borderColor: "gray",
+        borderWidth: 1,
+        borderRadius: 8,
+        width: "80%"
+    },
+    logItem: {
+        width: "100%",
+        paddingVertical: 20,
+        borderBottomColor: "gray",
+        borderBottomWidth: 1,
     },
     logContainer: {
         flexDirection: "row",
-        gap: 10,
-    },
-    logItem: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: 10,
-        borderRadius: 10,
-        borderColor: 'gray',
-        borderWidth: 1,
+        justifyContent: "space-between",
+        alignItems: "center",
         width: "100%",
-        maxWidth: 1024,
-        marginHorizontal: 'auto',
-        marginTop: 10,
+        paddingHorizontal: 10,
     },
     dateText: {
         fontSize: 30,
-        color: "white",
+        fontFamily: theme.font,
+        color: theme.dateColor,
+        flexShrink: 1,
     },
     titleText: {
         fontSize: 30,
-        color: "rgb(150, 239, 255)",
+        fontFamily: theme.font,
+        color: theme.highlight,
+        textAlign: "right",
+        flexShrink: 1,
     },
 });
