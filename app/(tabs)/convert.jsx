@@ -23,7 +23,7 @@ export default function Convert() {
                 <KeyboardAvoidingView behavior="padding" style={styles.container}>
                     <Text style={styles.heading}>Convert</Text>
                     <ScrollView style={{flex: 1, width: "100%"}} contentContainerStyle={{alignItems: "center"}}>
-                        <Text style={styles.label}>Pounds - Kilgrams</Text>
+                        <Text style={styles.label}>Pounds - Kilograms</Text>
                         <View style={styles.same}>
                             <TextInput
                             style={styles.input}
