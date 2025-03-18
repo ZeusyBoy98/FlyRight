@@ -18,6 +18,7 @@ export default function CreateLog() {
     const [arrival, setArrival] = useState("");
     const [departure, setDeparture] = useState("");
     const [date, setDate] = useState("");
+    const [length, setLength] = useState("");
     const [plane, setPlane] = useState("");
     const [logs, setLogs] = useState([]);
     const router = useRouter();
@@ -42,7 +43,7 @@ export default function CreateLog() {
             const newId = highestId + 1;
     
             const newLogs = [
-                { id: newId, title, arrival, departure, plane, date, text, completed: false },
+                { id: newId, title, arrival, departure, plane, length, date, text, completed: false },
                 ...logs,
             ];
             setLogs(newLogs);
@@ -57,6 +58,7 @@ export default function CreateLog() {
             setArrival("");
             setDeparture("");
             setDate("");
+            setLength("");
             setPlane("")
             setText("");
         }
@@ -71,14 +73,14 @@ export default function CreateLog() {
                 <View>
                     <TextInput
                         style={styles.titleInput}
-                        maxLength={20}
+                        maxLength={14}
                         placeholder="Title"
                         placeholderTextColor="gray"
                         value={title}
                         onChangeText={setTitle}
                     />
                 </View>
-                <View style={{flexDirection: "row",}}>
+                <View style={{flexDirection: "row"}}>
                     <TextInput
                     style={styles.dateInput}
                     maxLength={4}
@@ -116,6 +118,14 @@ export default function CreateLog() {
                         onChangeText={setDate}
                     />
                 </View>
+                <TextInput
+                    style={styles.dateInput}
+                    maxLength={10}
+                    placeholder="Length"
+                    placeholderTextColor="gray"
+                    value={length}
+                    onChangeText={setLength}
+                />
                 <ScrollView contentContainerStyle={{ alignItems: "center" }}>
                     <View>
                         <TextInput

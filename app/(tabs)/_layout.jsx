@@ -5,6 +5,7 @@ import React from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import Foundation from "@expo/vector-icons/Foundation";
 
 const colorScheme = Appearance.getColorScheme();
 let theme = colors[colorScheme];
@@ -21,8 +22,7 @@ export default function TabLayout() {
         <Tabs.Screen
             name="checklists"
             options={{
-                title: "Checklists",
-                size: 40,
+                tabBarShowLabel: false,
                 tabBarIcon: ({ focused }) => (
                     <FontAwesome6 name="clipboard" size={28} color={focused ? theme.highlight : theme.unHighlight} />
                 ),
@@ -31,8 +31,7 @@ export default function TabLayout() {
         <Tabs.Screen
             name="logbook"
             options={{
-                title: "LogBook",
-                size: 40,
+                tabBarShowLabel: false,
                 tabBarIcon: ({ focused }) => (
                     <MaterialCommunityIcons name="book-open-variant" size={30} color={focused ? theme.highlight : theme.unHighlight} />
                 ),
@@ -41,28 +40,25 @@ export default function TabLayout() {
         <Tabs.Screen
           name="index"
           options={{
-            title: "Home",
-            size: 40,
+            tabBarShowLabel: false,
             tabBarIcon: ({ focused }) => (
                 <Ionicons name="airplane-outline" size={30} color={focused ? theme.highlight : theme.unHighlight} />
             ),
           }}
         ></Tabs.Screen>
         <Tabs.Screen
-            name="atc"
+            name="convert"
             options={{
-                title: "ATC",
-                size: 40,
+                tabBarShowLabel: false,
                 tabBarIcon: ({ focused }) => (
-                    <Ionicons name="headset-outline" size={30} color={focused ? theme.highlight : theme.unHighlight} />
+                    <Foundation name="loop" size={30} color={focused ? theme.highlight : theme.unHighlight} />
                 ),
             }} 
         ></Tabs.Screen>
         <Tabs.Screen
             name="settings"
             options={{
-                title: "Settings",
-                size: 40,
+                tabBarShowLabel: false,
                 tabBarIcon: ({ focused }) => (
                     <Ionicons name="settings-outline" size={30} color={focused ? theme.highlight : theme.unHighlight} />
                 ),

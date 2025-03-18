@@ -9,17 +9,12 @@ let theme = colors[colorScheme];
 export default function Settings() {
     return (
         <View style={styles.container}>
-            <Link href="/howtouse" style={{ marginHorizontal: 'auto'}} asChild>
-                <Pressable style={styles.buttonTop}>
-                    <Text style={styles.buttonText}>How To Use</Text>
-                </Pressable>
-            </Link>
             <Link 
                 href='mailto:wetcementstudios@gmail.com?subject=FeedBack'
                 style={{ marginHorizontal: 'auto' }}
                 asChild
             >
-                <Pressable style={styles.button}>
+                <Pressable style={styles.buttonTop}>
                     <Text style={styles.buttonText}>FeedBack</Text>
                 </Pressable>
             </Link>
@@ -35,9 +30,6 @@ export default function Settings() {
                 </Pressable>
             </Link>
             <Text style={{marginTop: 30}}><Text style={{color: "gray", fontFamily: theme.font}}>Made with ❤️ by </Text><Text style={{color: "gray", fontFamily: theme.font, fontWeight: "bold" }}>ZeusyBoy</Text></Text>
-            <Pressable style={styles.buttonRound} onPress={() => AsyncStorage.clear()}>
-                <Text style={styles.buttonText}>(Debug) Clear Async Storage</Text>
-            </Pressable>
         </View>
     );
 }

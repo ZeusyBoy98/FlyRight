@@ -1,6 +1,7 @@
 export const colors = {
     light: {
         text: "black",
+        unText: "white",
         background: "rgb(226, 227, 237)",
         tabBar: "#f7fcfa",
         settingsButton: "#f7fcfa",
@@ -19,6 +20,7 @@ export const colors = {
         addButton: "white",
         exitButton: "white",
         text: "white",
+        unText: "black",
         highlight: "rgb(56, 201, 249)",
         unHighlight: "rgb(204, 247, 255)",
         logBackground: "#333333",
