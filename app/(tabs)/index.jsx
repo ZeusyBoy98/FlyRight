@@ -139,8 +139,9 @@ const styles = StyleSheet.create({
     backgroundColor: theme.homeTrans,
     padding: 10,
     borderRadius: 10,
-    paddingHorizontal: 100,
-    marginTop: "10%",
+    paddingHorizontal: "20%",
+    maxWidth: "95%",
+    marginTop: "15%",
   },
   right: {
     color: theme.highlight,
