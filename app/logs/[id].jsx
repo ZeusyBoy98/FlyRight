@@ -47,6 +47,10 @@ export default function ViewLog() {
         }
     };
 
+    const handlePress = () => {
+        router.push(`/editlog/${id}`)
+    };
+
     return (
         <ImageBackground source={logview} resizeMode="cover" style={styles.image}>
             <View style={styles.container}>
@@ -68,6 +72,9 @@ export default function ViewLog() {
                         </Pressable>
                         <Pressable onPress={() => router.push('/logbook')} style={styles.exitButton}>
                             <Text style={styles.exitButtonText}>Exit</Text>
+                        </Pressable>
+                        <Pressable onPress={handlePress}>
+                            <MaterialCommunityIcons name="pencil" size={43} color="white" />
                         </Pressable>
                     </View>
                 </ScrollView>

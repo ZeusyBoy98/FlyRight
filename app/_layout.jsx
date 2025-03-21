@@ -16,6 +16,7 @@ export default function RootLayout() {
         <Stack.Screen name="createlog/[id]" options={{headerShown: false}}/>
         <Stack.Screen name="checklists/[id]" options={{headerShown: false}}/>
         <Stack.Screen name="createchecklist/[id]" options={{headerShown: false}}/>
+        <Stack.Screen name="editlog/[id]" options={{headerShown: false}}/>
       </Stack>
     </SafeAreaProvider>
   );
