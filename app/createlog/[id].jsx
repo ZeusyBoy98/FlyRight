@@ -121,7 +121,7 @@ export default function CreateLog() {
                 <TextInput
                     style={styles.dateInput}
                     maxLength={10}
-                    placeholder="Length"
+                    placeholder="Duration"
                     placeholderTextColor="gray"
                     value={length}
                     onChangeText={setLength}

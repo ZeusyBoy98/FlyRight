@@ -103,7 +103,7 @@ export default function EditLog() {
             <TextInput
             style={styles.dateInput}
             maxLength={10}
-            placeholder="Length"
+            placeholder="Duration"
             placeholderTextColor="gray"
             value={log?.length || ''}
             onChangeText={(text) => setLog(prev => ({ ...prev, length: text}))}
