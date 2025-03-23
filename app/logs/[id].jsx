@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     dateText: {
         fontFamily: theme.font,
         color: "white",
-        fontSize: 30,
+        fontSize: 28,
         marginTop: 42,
     },
     text: {

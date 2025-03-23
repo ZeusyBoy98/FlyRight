@@ -44,6 +44,11 @@ export default function Convert() {
         setKMa(prevKMa => (prevKMa === 0 ? 1 : 0));
     };
 
+    // Function to check if a value is a valid number
+    const parseInput = (input) => {
+        return isNaN(parseFloat(input)) ? 0 : parseFloat(input);
+    };
+
     return (
         <ImageBackground source={convertbg} resizeMode="cover" style={styles.image}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -61,13 +66,13 @@ export default function Convert() {
                                 onChangeText={setPoundsItem}
                                 maxLength={9}
                                 /> :
-                                <Text style={styles.output}>{(kilogramsItem *  2.2046226218).toFixed(2)}</Text>
+                                <Text style={styles.output}>{Math.round(parseInput(kilogramsItem) *  2.2046226218)}</Text>
                             }
                             <Pressable onPress={togglePK}>
                                 <FontAwesome name={PK === 0 ? "arrow-right": "arrow-left"} size={30} color="white" />
                             </Pressable>
                             {PK === 0 ? 
-                                <Text style={styles.output}>{(poundsItem * 0.45359237).toFixed(2)}</Text> : 
+                                <Text style={styles.output}>{Math.round(parseInput(poundsItem) * 0.45359237)}</Text> : 
                                 <TextInput
                                 style={styles.input}
                                 placeholder="Kilograms"
@@ -90,13 +95,13 @@ export default function Convert() {
                                 onChangeText={setFeetItem}
                                 maxLength={9}
                                 /> : 
-                                <Text style={styles.output}>{(metresItem *  3.280839895).toFixed(2)}</Text>
+                                <Text style={styles.output}>{Math.round(parseInput(metresItem) *  3.280839895)}</Text>
                             }
                             <Pressable onPress={toggleFM}>
                                 <FontAwesome name={FM === 0 ? "arrow-right" : "arrow-left"} size={30} color="white" />
                             </Pressable>
                             {FM === 0 ? 
-                                <Text style={styles.output}>{(feetItem *  0.3048).toFixed(2)}</Text> :
+                                <Text style={styles.output}>{Math.round(parseInput(feetItem) *  0.3048)}</Text> :
                                 <TextInput
                                 style={styles.input}
                                 placeholder="Metres"
@@ -119,13 +124,13 @@ export default function Convert() {
                                 onChangeText={setKnots1Item}
                                 maxLength={9}
                                 /> : 
-                                <Text style={styles.output}>{(kmhItem /  1.852).toFixed(2)}</Text>
+                                <Text style={styles.output}>{Math.round(parseInput(kmhItem) /  1.852)}</Text>
                             }
                             <Pressable onPress={toggleKK}>
                                 <FontAwesome name={KK === 0 ? "arrow-right" : "arrow-left"} size={30} color="white" />
                             </Pressable>
                             {KK === 0 ?
-                                <Text style={styles.output}>{(knots1Item *  1.852).toFixed(2)}</Text> :
+                                <Text style={styles.output}>{Math.round(parseInput(knots1Item) *  1.852)}</Text> :
                                 <TextInput
                                 style={styles.input}
                                 placeholder="km/h"
@@ -148,13 +153,13 @@ export default function Convert() {
                                 onChangeText={setKnots2Item}
                                 maxLength={9}
                                 /> :
-                                <Text style={styles.output}>{(mphItem * 0.868976).toFixed(2)}</Text>
+                                <Text style={styles.output}>{Math.round(parseInput(mphItem) * 0.868976)}</Text>
                             }
                             <Pressable onPress={toggleKM}>
                                 <FontAwesome name={KM === 0 ? "arrow-right" : "arrow-left"} size={30} color="white" />
                             </Pressable>
                             {KM === 0 ? 
-                                <Text style={styles.output}>{(knots2Item * 1.150779).toFixed(2)}</Text> :
+                                <Text style={styles.output}>{Math.round(parseInput(knots2Item) * 1.150779)}</Text> :
                                 <TextInput
                                 style={styles.input}
                                 placeholder="mp/h"
@@ -177,13 +182,13 @@ export default function Convert() {
                                 onChangeText={setKnots3Item}
                                 maxLength={9}
                                 /> :
-                                <Text style={styles.output}>{(machItem * 666.738661).toFixed(2)}</Text>
+                                <Text style={styles.output}>{Math.round(parseInput(machItem) * 666.738661)}</Text>
                             }
                             <Pressable onPress={toggleKMa}>
                                 <FontAwesome name={KMa === 0 ? "arrow-right" : "arrow-left"} size={30} color="white" />
                             </Pressable>
                             {KMa === 0 ? 
-                                <Text style={styles.output}>{(knots3Item * 0.0015).toFixed(2)}</Text> :
+                                <Text style={styles.output}>{(parseInput(knots3Item) * 0.0015).toFixed(2)}</Text> :
                                 <TextInput
                                 style={styles.input}
                                 placeholder="Mach"

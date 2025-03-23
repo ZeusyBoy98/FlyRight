@@ -183,7 +183,8 @@ const styles = StyleSheet.create({
     heading: {
         color: theme.highlight,
         fontFamily: theme.font,
-        fontSize: 50,
+        fontSize: 30,
+        fontWeight: "bold",
         borderBottomWidth: 3,
         borderBottomColor: theme.text,
         borderBottomLeftRadius: 10,

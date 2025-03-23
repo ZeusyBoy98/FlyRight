@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
   },
   logDate: {
     color: "white",
-    fontSize: 30,
+    fontSize: 28,
   },
   logPlane: {
     color: "white",
