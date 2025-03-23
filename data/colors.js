@@ -11,7 +11,8 @@ export const colors = {
         unHighlight: "rgb(95, 95, 95), 255)",
         logBackground: "#f7fcfa",
         homeTrans: "rgba(0, 0, 0, 0.5)",
-        inputBackround: "white",
+        inputBackground: "rgb(214, 214, 218)",
+        inPlaceholder: "rgb(104, 104, 104)",
     },
     dark: {
         background: "rgb(10, 10, 10)",
@@ -26,6 +27,7 @@ export const colors = {
         logBackground: "#333333",
         homeTrans: "rgba(0, 0, 0, 0.5)",
         dateColor: "white",
-        inputBackground: "rgba(0,0,0,0.5)",
+        inputBackground: "rgb(40, 40, 40)",
+        inPlaceholder: "rgb(188, 188, 188)",
     },
 }

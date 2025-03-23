@@ -95,7 +95,7 @@ export default function CreateLog() {
                         style={styles.titleInput}
                         maxLength={14}
                         placeholder="Title"
-                        placeholderTextColor="gray"
+                        placeholderTextColor={theme.inPlaceholder}
                         value={title}
                         onChangeText={setTitle}
                     />
@@ -105,7 +105,7 @@ export default function CreateLog() {
                     style={styles.dateInput}
                     maxLength={4}
                     placeholder="Dep"
-                    placeholderTextColor="gray"
+                    placeholderTextColor={theme.inPlaceholder}
                     value={departure}
                     onChangeText={setDeparture}
                     />
@@ -114,7 +114,7 @@ export default function CreateLog() {
                     style={styles.dateInput}
                     maxLength={4}
                     placeholder="Arr"
-                    placeholderTextColor="gray"
+                    placeholderTextColor={theme.inPlaceholder}
                     value={arrival}
                     onChangeText={setArrival}
                     />
@@ -122,7 +122,7 @@ export default function CreateLog() {
                     style={[styles.dateInput, styles.planeInput]}
                     maxLength={8}
                     placeholder="Aircraft"
-                    placeholderTextColor="gray"
+                    placeholderTextColor={theme.inPlaceholder}
                     value={plane}
                     onChangeText={setPlane}
                     />
@@ -145,7 +145,7 @@ export default function CreateLog() {
                     style={styles.dateInput}
                     maxLength={10}
                     placeholder="Duration"
-                    placeholderTextColor="gray"
+                    placeholderTextColor={theme.inPlaceholder}
                     value={length}
                     onChangeText={setLength}
                 />
@@ -154,7 +154,7 @@ export default function CreateLog() {
                         <TextInput
                             style={styles.textInput}
                             placeholder="Text"
-                            placeholderTextColor="gray"
+                            placeholderTextColor={theme.inPlaceholder}
                             value={text}
                             onChangeText={setText}
                             multiline={true}
@@ -197,9 +197,8 @@ const styles = StyleSheet.create({
         color: theme.text,
         fontFamily: theme.font,
         fontSize: 30,
-        borderColor: "gray",
-        borderWidth: 1,
-        borderRadius: 5,
+        fontWeight: "400",
+        borderRadius: 10,
         padding: 10,
         marginBottom: 10,
     },
@@ -212,9 +211,7 @@ const styles = StyleSheet.create({
         color: theme.text,
         fontFamily: theme.font,
         fontSize: 20,
-        borderColor: "gray",
-        borderWidth: 1,
-        borderRadius: 5,
+        borderRadius: 10,
         padding: 10,
         marginBottom: 10,
     },
@@ -226,9 +223,7 @@ const styles = StyleSheet.create({
         color: theme.text,
         fontFamily: theme.font,
         fontSize: 18,
-        borderColor: "gray",
-        borderWidth: 1,
-        borderRadius: 5,
+        borderRadius: 10,
         padding: 10,
         minWidth: "95%",
         maxWidth: "95%",
