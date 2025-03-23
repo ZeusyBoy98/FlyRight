@@ -1,13 +1,11 @@
 import { Text, View, TextInput, Appearance, Pressable, StyleSheet, ScrollView, KeyboardAvoidingView, TouchableWithoutFeedback } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useState, useEffect } from 'react';
-import { data } from "@/data/logs";
 import { colors } from "@/data/colors";
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import Animated, { LinearTransition } from "react-native-reanimated";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
-import * as Haptics from 'expo-haptics';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import Feather from '@expo/vector-icons/Feather';
+
 
 const colorScheme = Appearance.getColorScheme();
 let theme = colors[colorScheme];
@@ -17,11 +15,14 @@ export default function CreateLog() {
     const [text, setText] = useState("");
     const [arrival, setArrival] = useState("");
     const [departure, setDeparture] = useState("");
-    const [date, setDate] = useState("");
+    const [date, setDate] = useState(new Date());
+    const [formattedDate, setFormattedDate] = useState("");
     const [length, setLength] = useState("");
     const [plane, setPlane] = useState("");
     const [logs, setLogs] = useState([]);
     const router = useRouter();
+    const [mode, setMode] = useState('date');
+    const [show, setShow] = useState(false);
 
     useEffect(() => {
         const loadData = async () => {
@@ -43,7 +44,7 @@ export default function CreateLog() {
             const newId = highestId + 1;
     
             const newLogs = [
-                { id: newId, title, arrival, departure, plane, length, date, text, completed: false },
+                { id: newId, title, arrival, departure, plane, length, date: formattedDate, text, completed: false },
                 ...logs,
             ];
             setLogs(newLogs);
@@ -57,12 +58,31 @@ export default function CreateLog() {
             setTitle("");
             setArrival("");
             setDeparture("");
-            setDate("");
+            setFormattedDate("");
             setLength("");
             setPlane("")
             setText("");
         }
         router.push('/(tabs)/logbook');
+    };
+
+    const onChange = (event, selectedDate) => {
+        if (selectedDate) {
+            setDate(selectedDate);
+            const day = selectedDate.getDate().toString().padStart(2, "0");
+            const month = (selectedDate.getMonth() + 1).toString().padStart(2, "0");
+            const year = selectedDate.getFullYear();
+            setFormattedDate(`${day}/${month}/${year}`);
+        }
+    };    
+    
+    const showMode = (currentMode) => {
+        setShow(true);
+        setMode(currentMode);
+    };
+    
+    const showDatepicker = () => {
+        showMode('date');
     };
     
 
@@ -107,16 +127,19 @@ export default function CreateLog() {
                     onChangeText={setPlane}
                     />
                 </View>
-                <View>
-                    <Text style={styles.dateFormat}>Format: xx/xx/xxxx</Text>
-                    <TextInput
-                        style={styles.dateInput}
-                        maxLength={10}
-                        placeholder="Date"
-                        placeholderTextColor="gray"
+                <View style={{flexDirection: "row", marginBottom: 10}}>
+                    <Pressable onPress={showDatepicker}>
+                        <Feather name="calendar" size={30} color={theme.text} />
+                    </Pressable>
+                    {show && (
+                        <DateTimePicker
+                        testID="dateTimePicker"
                         value={date}
-                        onChangeText={setDate}
-                    />
+                        mode={mode}
+                        is24Hour={true}
+                        onChange={onChange}
+                        />                    
+                    )}
                 </View>
                 <TextInput
                     style={styles.dateInput}

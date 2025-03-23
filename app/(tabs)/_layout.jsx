@@ -3,9 +3,9 @@ import { colors } from "@/data/colors";
 import { Appearance } from 'react-native';
 import React from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Foundation from "@expo/vector-icons/Foundation";
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 const colorScheme = Appearance.getColorScheme();
 let theme = colors[colorScheme];
@@ -24,7 +24,7 @@ export default function TabLayout() {
             options={{
                 tabBarShowLabel: false,
                 tabBarIcon: ({ focused }) => (
-                    <FontAwesome6 name="clipboard" size={28} color={focused ? theme.highlight : theme.unHighlight} />
+                    <MaterialIcons name="checklist" size={34} color={focused ? theme.highlight : theme.unHighlight} />
                 ),
             }} 
         ></Tabs.Screen>
@@ -42,7 +42,7 @@ export default function TabLayout() {
           options={{
             tabBarShowLabel: false,
             tabBarIcon: ({ focused }) => (
-                <Ionicons name="airplane-outline" size={30} color={focused ? theme.highlight : theme.unHighlight} />
+                <MaterialIcons name="airplanemode-on" size={30} color={focused ? theme.highlight : theme.unHighlight} />
             ),
           }}
         ></Tabs.Screen>
@@ -60,7 +60,7 @@ export default function TabLayout() {
             options={{
                 tabBarShowLabel: false,
                 tabBarIcon: ({ focused }) => (
-                    <Ionicons name="settings-outline" size={30} color={focused ? theme.highlight : theme.unHighlight} />
+                    <Ionicons name="settings-sharp" size={30} color={focused ? theme.highlight : theme.unHighlight} />
                 ),
             }} 
         ></Tabs.Screen>

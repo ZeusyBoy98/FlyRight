@@ -2,11 +2,10 @@ import { useLocalSearchParams } from "expo-router";
 import { Text, View, StyleSheet, Pressable, ScrollView, Appearance, ImageBackground, SafeAreaView, TextInput } from "react-native";
 import { useState, useEffect } from 'react';
 import { colors } from "@/data/colors";
-import logview from "@/assets/images/logview.jpg";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
-import * as Haptics from 'expo-haptics';
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import DateTimePicker from '@react-native-community/datetimepicker';
+import Feather from '@expo/vector-icons/Feather';
 
 const colorScheme = Appearance.getColorScheme();
 let theme = colors[colorScheme];
@@ -15,6 +14,10 @@ export default function EditLog() {
     const { id } = useLocalSearchParams();
     const [log, setLog] = useState({});
     const router = useRouter();
+    const [mode, setMode] = useState('date');
+    const [show, setShow] = useState(false);
+    const [date, setDate] = useState(new Date());
+    const [formattedDate, setFormattedDate] = useState("");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -24,6 +27,14 @@ export default function EditLog() {
                 if (storageLogs.length) {
                     const myLog = storageLogs.find(log => log.id.toString() === id);
                     setLog(myLog || {});
+                    if (myLog && myLog.date) {
+                        const parts = myLog.date.split('/');
+                        const year = parseInt(parts[2], 10);
+                        const month = parseInt(parts[1], 10) - 1;
+                        const day = parseInt(parts[0], 10);
+                        setDate(new Date(year, month, day));
+                        setFormattedDate(myLog.date);
+                    }
                 }
             } catch (e) {
                 console.error(e);
@@ -35,7 +46,7 @@ export default function EditLog() {
 
     const handleSave = async () => {
         try {
-            const savedLog = { ...log, title: log.title, date: log.date, length: log.length, departure: log.departure, arrival: log.arrival, plane: log.plane, text: log.text };
+            const savedLog = { ...log, title: log.title, date: formattedDate, length: log.length, departure: log.departure, arrival: log.arrival, plane: log.plane, text: log.text };
 
             const jsonValue = await AsyncStorage.getItem('Logs')
             const storageLogs = jsonValue != null ? JSON.parse(jsonValue) : null
@@ -52,7 +63,26 @@ export default function EditLog() {
         } catch (e) {
             console.error(e)
         }
-    }
+    };
+
+    const onChange = (event, selectedDate) => {
+        if (selectedDate) {
+            setDate(selectedDate);
+            const day = selectedDate.getDate().toString().padStart(2, "0");
+            const month = (selectedDate.getMonth() + 1).toString().padStart(2, "0");
+            const year = selectedDate.getFullYear();
+            setFormattedDate(`${day}/${month}/${year}`);
+        }
+    };    
+    
+    const showMode = (currentMode) => {
+        setShow(true);
+        setMode(currentMode);
+    };
+    
+    const showDatepicker = () => {
+        showMode('date');
+    };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -91,15 +121,20 @@ export default function EditLog() {
                 onChangeText={(text) => setLog(prev => ({ ...prev, plane: text}))}
                 />
             </View>
-            <Text style={styles.dateFormat}>Format: xx/xx/xxxx</Text>
-            <TextInput
-            style={styles.dateInput}
-            maxLength={10}
-            placeholder="Date"
-            placeholderTextColor="gray"
-            value={log?.date || ''}
-            onChangeText={(text) => setLog(prev => ({ ...prev, date: text}))}
-            />
+            <View style={{flexDirection: "row", marginBottom: 10}}>
+                <Pressable onPress={showDatepicker}>
+                    <Feather name="calendar" size={30} color={theme.text} />
+                </Pressable>
+                {show && (
+                    <DateTimePicker
+                    testID="dateTimePicker"
+                    value={date}
+                    mode={mode}
+                    is24Hour={true}
+                    onChange={onChange}
+                    />                    
+                )}
+            </View>
             <TextInput
             style={styles.dateInput}
             maxLength={10}
