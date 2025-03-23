@@ -90,7 +90,7 @@ export default function EditLog() {
             style={styles.titleInput}
             maxLength={14}
             placeholder="Title"
-            placeholderTextColor="gray"
+            placeholderTextColor={theme.inPlaceholder}
             value={log?.title || ''}
             onChangeText={(text) => setLog(prev => ({ ...prev, title: text}))}
             />
@@ -99,16 +99,16 @@ export default function EditLog() {
                 style={styles.dateInput}
                 maxLength={4}
                 placeholder="Dep"
-                placeholderTextColor="gray"
+                placeholderTextColor={theme.inPlaceholder}
                 value={log?.departure || ''}
                 onChangeText={(text) => setLog(prev => ({ ...prev, departure: text}))}
                 />
-                <Text style={{color: "gray", fontSize: 36}}> - </Text>
+                <Text style={{color: theme.inPlaceholder, fontSize: 36}}> - </Text>
                 <TextInput
                 style={styles.dateInput}
                 maxLength={4}
                 placeholder="Arr"
-                placeholderTextColor="gray"
+                placeholderTextColor={theme.inPlaceholder}
                 value={log?.arrival || ''}
                 onChangeText={(text) => setLog(prev => ({ ...prev, arrival: text}))}
                 />
@@ -116,7 +116,7 @@ export default function EditLog() {
                 style={[styles.dateInput, styles.planeInput]}
                 maxLength={8}
                 placeholder="Aircraft"
-                placeholderTextColor="gray"
+                placeholderTextColor={theme.inPlaceholder}
                 value={log?.plane || ''}
                 onChangeText={(text) => setLog(prev => ({ ...prev, plane: text}))}
                 />
@@ -139,7 +139,7 @@ export default function EditLog() {
             style={styles.dateInput}
             maxLength={10}
             placeholder="Duration"
-            placeholderTextColor="gray"
+            placeholderTextColor={theme.inPlaceholder}
             value={log?.length || ''}
             onChangeText={(text) => setLog(prev => ({ ...prev, length: text}))}
             />
@@ -147,7 +147,7 @@ export default function EditLog() {
                 <TextInput
                 style={styles.textInput}
                 placeholder="Text"
-                placeholderTextColor="gray"
+                placeholderTextColor={theme.inPlaceholder}
                 value={log?.text || ''}
                 onChangeText={(text) => setLog(prev => ({ ...prev, text: text}))}
                 multiline={true}
@@ -188,9 +188,7 @@ const styles = StyleSheet.create({
         color: theme.text,
         fontFamily: theme.font,
         fontSize: 30,
-        borderColor: "gray",
-        borderWidth: 1,
-        borderRadius: 5,
+        borderRadius: 10,
         padding: 10,
         marginBottom: 10,
     },
@@ -203,9 +201,7 @@ const styles = StyleSheet.create({
         color: theme.text,
         fontFamily: theme.font,
         fontSize: 20,
-        borderColor: "gray",
-        borderWidth: 1,
-        borderRadius: 5,
+        borderRadius: 10,
         padding: 10,
         marginBottom: 10,
     },
@@ -217,9 +213,7 @@ const styles = StyleSheet.create({
         color: theme.text,
         fontFamily: theme.font,
         fontSize: 18,
-        borderColor: "gray",
-        borderWidth: 1,
-        borderRadius: 5,
+        borderRadius: 10,
         padding: 10,
         minWidth: "95%",
         maxWidth: "95%",
