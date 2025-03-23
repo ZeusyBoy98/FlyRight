@@ -92,7 +92,7 @@ export default function CreateChecklist() {
                         style={styles.planeInput}
                         maxLength={4}
                         placeholder="Aircraft"
-                        placeholderTextColor="gray"
+                        placeholderTextColor={theme.inPlaceholder}
                         value={plane}
                         onChangeText={setPlane}
                     />
@@ -100,7 +100,7 @@ export default function CreateChecklist() {
                         style={styles.planeInput}
                         maxLength={14}
                         placeholder="Title"
-                        placeholderTextColor="gray"
+                        placeholderTextColor={theme.inPlaceholder}
                         value={title}
                         onChangeText={setTitle}
                     />
@@ -113,7 +113,7 @@ export default function CreateChecklist() {
                         <TextInput
                             style={styles.itemInput}
                             placeholder="Add checklist item..."
-                            placeholderTextColor="gray"
+                            placeholderTextColor={theme.inPlaceholder}
                             value={newItem}
                             onChangeText={setNewItem}
                         />
@@ -178,9 +178,7 @@ const styles = StyleSheet.create({
         color: theme.text,
         fontFamily: theme.font,
         fontSize: 20,
-        borderColor: "gray",
-        borderWidth: 1,
-        borderRadius: 5,
+        borderRadius: 10,
         padding: 10,
         marginBottom: 10,
         width: 140,
@@ -203,15 +201,13 @@ const styles = StyleSheet.create({
         color: theme.text,
         fontFamily: theme.font,
         fontSize: 18,
-        borderColor: "gray",
-        borderWidth: 1,
-        borderRadius: 5,
+        borderRadius: 10,
         padding: 10,
     },
     addItemButton: {
         backgroundColor: "green",
         padding: 10,
-        borderRadius: 5,
+        borderRadius: 10,
     },
     item: {
         flexDirection: "row",
