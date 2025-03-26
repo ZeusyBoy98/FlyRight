@@ -8,14 +8,14 @@ const colorScheme = Appearance.getColorScheme();
 let theme = colors[colorScheme];
 
 export default function Settings() {
-    const [planeBg, setPlaneBg] = useState(false);
-    const [homeBg, setHomeBg] = useState(false);
+    const [planeBg, setPlaneBg] = useState(true);
+    const [homeBg, setHomeBg] = useState(true);
 
     useEffect(() => {
         const loadSetting = async () => {
             const storedValue2 = await AsyncStorage.getItem("homebg");
             if (storedValue2 !== null) {
-                setPlaneBg(JSON.parse(storedValue2));
+                setHomeBg(JSON.parse(storedValue2));
             }
             const storedValue = await AsyncStorage.getItem("planebg");
             if (storedValue !== null) {
@@ -88,6 +88,10 @@ export default function Settings() {
                 <Text style={{ color: "gray", fontFamily: theme.font }}>Made with ❤️ by </Text>
                 <Text style={{ color: "gray", fontFamily: theme.font, fontWeight: "bold" }}>ZeusyBoy</Text>
             </Text>
+            <Text style={{ color: "gray", fontFamily: theme.font, marginTop: 50 }}>Check FlyRight out on github:</Text>
+            <Link href="https://github.com/ZeusyBoy98/FlyRight" style={{ marginHorizontal: "auto" }} asChild>
+                <Text style={{ color: "gray", fontFamily: theme.font }}>https://github.com/ZeusyBoy98/FlyRight</Text>
+            </Link>
         </View>
     );
 }
