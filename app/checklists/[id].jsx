@@ -15,6 +15,7 @@ let theme = colors[colorScheme];
 export default function ViewChecklist() {
     const { id } = useLocalSearchParams();
     const [checklist, setChecklist] = useState({});
+    const [bg, setBg] = useState(null);
     const router = useRouter();
 
     useEffect(() => {
@@ -34,6 +35,14 @@ export default function ViewChecklist() {
         fetchData();
     }, [id]);
 
+    useEffect(() => {
+        const loadSetting = async () => {
+            const bgValue = await AsyncStorage.getItem("planebg");
+            setBg(bgValue === "true");
+        };
+        loadSetting();
+    }, []);
+
     const removeChecklist = async () => {
         try {
             const jsonValue = await AsyncStorage.getItem("Checklists");
@@ -49,7 +58,7 @@ export default function ViewChecklist() {
     };
 
     return (
-        <ImageBackground source={checklistbg} resizeMode="cover" style={styles.container}>
+        <ImageBackground source={bg === true ? checklistbg : null} resizeMode="cover" style={styles.container}>
             <View style={styles.headingContainer}>
                 <Text style={styles.planeText}>{checklist?.plane}</Text>
                 <Text style={styles.planeText}>{checklist?.title}</Text>

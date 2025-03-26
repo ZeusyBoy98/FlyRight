@@ -16,6 +16,7 @@ export default function Checklists() {
     const [checklists, setChecklists] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [fullData, setFullData] = useState([]);
+    const [bg, setBg] = useState(null);
     const router = useRouter();
 
     useEffect(() => {
@@ -31,6 +32,14 @@ export default function Checklists() {
             }
         };
         fetchData();
+    }, []);
+
+    useEffect(() => {
+        const loadSetting = async () => {
+            const bgValue = await AsyncStorage.getItem("planebg");
+            setBg(bgValue === "true");
+        };
+        loadSetting();
     }, []);
 
     const handlePress = (id) => {
@@ -64,7 +73,7 @@ export default function Checklists() {
     );
 
     return (
-        <ImageBackground source={checklistsbg} resizeMode="cover" style={styles.image}>
+        <ImageBackground source={bg === true ? checklistsbg : null} resizeMode="cover" style={styles.image}>
             <View style={styles.overlay} />
 
             <SafeAreaView style={styles.content}>

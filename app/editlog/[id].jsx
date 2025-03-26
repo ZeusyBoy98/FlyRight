@@ -151,6 +151,7 @@ export default function EditLog() {
                 value={log?.text || ''}
                 onChangeText={(text) => setLog(prev => ({ ...prev, text: text}))}
                 multiline={true}
+                scrollEnabled={false}
                 />
                 <View style={{ flexDirection: "row", gap: 30, marginBottom: 10, }}>
                     <Pressable onPress={() => router.push(`/logs/${id}`)} style={styles.cancelButton}>
@@ -215,8 +216,8 @@ const styles = StyleSheet.create({
         fontSize: 18,
         borderRadius: 10,
         padding: 10,
-        minWidth: "95%",
-        maxWidth: "95%",
+        minWidth: "90%",
+        maxWidth: "90%",
         marginBottom: 10,
     },
     createButton: {

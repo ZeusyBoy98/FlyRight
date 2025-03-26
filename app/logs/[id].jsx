@@ -14,6 +14,7 @@ let theme = colors[colorScheme];
 export default function ViewLog() {
     const { id } = useLocalSearchParams();
     const [log, setLog] = useState({});
+    const [bg, setBg] = useState(null);
     const router = useRouter();
 
     useEffect(() => {
@@ -32,6 +33,14 @@ export default function ViewLog() {
 
         fetchData();
     }, [id]);
+
+    useEffect(() => {
+        const loadSetting = async () => {
+            const bgValue = await AsyncStorage.getItem("planebg");
+            setBg(bgValue === "true");
+        };
+        loadSetting();
+    }, []);
 
     const removeLog = async () => {
         try {
@@ -52,7 +61,7 @@ export default function ViewLog() {
     };
 
     return (
-        <ImageBackground source={logview} resizeMode="cover" style={styles.image}>
+        <ImageBackground source={bg === true ? logview : null} resizeMode="cover" style={styles.image}>
             <View style={styles.container}>
                 <View style={{flexDirection: "row", justifyContent: "center", width: "100%", gap: 30, borderBottomColor: "gray", borderBottomWidth: 1,}}>
                     <Text style={styles.titleText}>{log?.title}</Text>

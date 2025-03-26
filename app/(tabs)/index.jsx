@@ -13,6 +13,7 @@ export default function Index() {
   const [logs, setLogs] = useState([]);
   const [checklist, setChecklist] = useState({});
   const [checklists, setChecklists] = useState({});
+  const [bg, setBg] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -47,9 +48,33 @@ export default function Index() {
     fetchChecklistData();
   }, []);
 
+  useEffect(() => {
+    const loadSetting = async () => {
+        const bgValue = await AsyncStorage.getItem("homebg");
+        setBg(bgValue === "true");
+    };
+    loadSetting();
+}, []);
+
+  const checkFirstLaunch = async () => {
+    try {
+      const isFirstLaunch = await AsyncStorage.getItem('isFirstLaunch');
+      
+      if (isFirstLaunch === null) {
+        await AsyncStorage.setItem('planebg', 'true');
+        await AsyncStorage.setItem('homebg', 'true');
+        await AsyncStorage.setItem('isFirstLaunch', 'false');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+  checkFirstLaunch();
+
   return (
     <View style={styles.container}>
-      <ImageBackground source={homepageImage} resizeMode="cover" style={styles.image}>
+      <ImageBackground source={bg === true ? homepageImage : null} resizeMode="cover" style={styles.image}>
         <View style={styles.textContainer}>
           <Text style={styles.heading}>Fly</Text>
           <Text style={styles.right}>Right</Text>

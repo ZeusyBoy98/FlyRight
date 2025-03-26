@@ -88,7 +88,7 @@ export default function CreateLog() {
 
     return (
         <TouchableWithoutFeedback>
-            <KeyboardAvoidingView behavior="padding" style={styles.container}>
+            <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={10} style={styles.container}>
                 <Text style={styles.heading}>Create Log</Text>
                 <View>
                     <TextInput
@@ -158,6 +158,7 @@ export default function CreateLog() {
                             value={text}
                             onChangeText={setText}
                             multiline={true}
+                            scrollEnabled={false}
                         />
                     </View>
                     <View style={{ flexDirection: "row", gap: 30, marginBottom: 10, }}>
@@ -226,8 +227,8 @@ const styles = StyleSheet.create({
         fontSize: 18,
         borderRadius: 10,
         padding: 10,
-        minWidth: "95%",
-        maxWidth: "95%",
+        minWidth: "90%",
+        maxWidth: "90%",
         marginBottom: 10,
     },
     createButton: {

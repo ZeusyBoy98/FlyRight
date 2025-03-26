@@ -1,8 +1,9 @@
 import { Text, View, StyleSheet, ImageBackground, Appearance, Pressable, TextInput, Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView, ScrollView } from "react-native";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { colors } from '@/data/colors';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import convertbg from "@/assets/images/convertbg.jpg";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const colorScheme = Appearance.getColorScheme();
 let theme = colors[colorScheme];
@@ -23,6 +24,7 @@ export default function Convert() {
     const [KK, setKK] = useState(0);
     const [KM, setKM] = useState(0);
     const [KMa, setKMa] = useState(0);
+    const [bg, setBg] = useState(null);
 
     function togglePK() {
         setPK(prevPK => (prevPK === 0 ? 1 : 0));
@@ -44,13 +46,20 @@ export default function Convert() {
         setKMa(prevKMa => (prevKMa === 0 ? 1 : 0));
     };
 
-    // Function to check if a value is a valid number
     const parseInput = (input) => {
         return isNaN(parseFloat(input)) ? 0 : parseFloat(input);
     };
 
+    useEffect(() => {
+        const loadSetting = async () => {
+            const bgValue = await AsyncStorage.getItem("planebg");
+            setBg(bgValue === "true");
+        };
+        loadSetting();
+    }, []);
+
     return (
-        <ImageBackground source={convertbg} resizeMode="cover" style={styles.image}>
+        <ImageBackground source={bg === true ? convertbg : null} resizeMode="cover" style={styles.image}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <KeyboardAvoidingView behavior="padding" style={styles.container}>
                     <Text style={styles.heading}>Convert</Text>
