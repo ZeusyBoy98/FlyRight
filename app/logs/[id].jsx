@@ -67,7 +67,10 @@ export default function ViewLog() {
                     <Text style={styles.titleText}>{log?.title}</Text>
                     <Text style={styles.dateText}>{log?.date}</Text>
                 </View>
-                <Text style={styles.placeText}>{log?.length}</Text>
+                <View style={{flexDirection: "row", gap: 20}}>
+                    <Text style={styles.placeText}>Hours: {log?.hours}</Text>
+                    <Text style={styles.placeText}>Minutes: {log?.minutes}</Text>
+                </View>
                 <Text><Text style={styles.placeText}>{log?.departure}</Text><Text style={styles.placeText}> - </Text><Text style={styles.placeText}>{log?.arrival}</Text></Text>
                 <Text style={styles.placeText}>{log?.plane}</Text>
                 <View style={{width: "70%", height: 10, borderBottomColor: "gray", borderBottomWidth: 1}}></View>

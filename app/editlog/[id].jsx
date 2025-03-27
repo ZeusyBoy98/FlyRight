@@ -46,7 +46,7 @@ export default function EditLog() {
 
     const handleSave = async () => {
         try {
-            const savedLog = { ...log, title: log.title, date: formattedDate, length: log.length, departure: log.departure, arrival: log.arrival, plane: log.plane, text: log.text };
+            const savedLog = { ...log, title: log.title, date: formattedDate, hours: log.hours, minutes: log.minutes, departure: log.departure, arrival: log.arrival, plane: log.plane, text: log.text };
 
             const jsonValue = await AsyncStorage.getItem('Logs')
             const storageLogs = jsonValue != null ? JSON.parse(jsonValue) : null
@@ -137,11 +137,19 @@ export default function EditLog() {
             </View>
             <TextInput
             style={styles.dateInput}
-            maxLength={10}
-            placeholder="Duration"
+            maxLength={2}
+            placeholder="Hrs"
             placeholderTextColor={theme.inPlaceholder}
-            value={log?.length || ''}
-            onChangeText={(text) => setLog(prev => ({ ...prev, length: text}))}
+            value={log?.hours || ''}
+            onChangeText={(text) => setLog(prev => ({ ...prev, hours: text}))}
+            />
+            <TextInput
+            style={styles.dateInput}
+            maxLength={2}
+            placeholder="Min"
+            placeholderTextColor={theme.inPlaceholder}
+            value={log?.minutes || ''}
+            onChangeText={(text) => setLog(prev => ({ ...prev, minutes: text}))}
             />
             <ScrollView contentContainerStyle={{ alignItems: "center" }}>
                 <TextInput

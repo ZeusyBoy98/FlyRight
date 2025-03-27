@@ -74,7 +74,7 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={bg === true ? homepageImage : null} resizeMode="cover" style={styles.image}>
+      <ImageBackground source={bg === false ? null : homepageImage} resizeMode="cover" style={styles.image}>
         <View style={styles.textContainer}>
           <Text style={styles.heading}>Fly</Text>
           <Text style={styles.right}>Right</Text>

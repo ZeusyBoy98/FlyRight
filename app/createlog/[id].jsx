@@ -17,7 +17,8 @@ export default function CreateLog() {
     const [departure, setDeparture] = useState("");
     const [date, setDate] = useState(new Date());
     const [formattedDate, setFormattedDate] = useState("");
-    const [length, setLength] = useState("");
+    const [hours, setHours] = useState("");
+    const [minutes, setMinutes] = useState("");
     const [plane, setPlane] = useState("");
     const [logs, setLogs] = useState([]);
     const router = useRouter();
@@ -44,7 +45,7 @@ export default function CreateLog() {
             const newId = highestId + 1;
     
             const newLogs = [
-                { id: newId, title, arrival, departure, plane, length, date: formattedDate, text, completed: false },
+                { id: newId, title, arrival, departure, plane, hours, minutes, date: formattedDate, text, completed: false },
                 ...logs,
             ];
             setLogs(newLogs);
@@ -59,7 +60,8 @@ export default function CreateLog() {
             setArrival("");
             setDeparture("");
             setFormattedDate("");
-            setLength("");
+            setHours("");
+            setMinutes("");
             setPlane("")
             setText("");
         }
@@ -141,14 +143,24 @@ export default function CreateLog() {
                         />                    
                     )}
                 </View>
-                <TextInput
-                    style={styles.dateInput}
-                    maxLength={10}
-                    placeholder="Duration"
-                    placeholderTextColor={theme.inPlaceholder}
-                    value={length}
-                    onChangeText={setLength}
-                />
+                <View style={{flexDirection: "row", gap: 20}}>
+                    <TextInput
+                        style={styles.dateInput}
+                        maxLength={2}
+                        placeholder="Hrs"
+                        placeholderTextColor={theme.inPlaceholder}
+                        value={hours}
+                        onChangeText={setHours}
+                    />
+                    <TextInput
+                        style={styles.dateInput}
+                        maxLength={2}
+                        placeholder="Mins"
+                        placeholderTextColor={theme.inPlaceholder}
+                        value={minutes}
+                        onChangeText={setMinutes}
+                    />
+                </View>
                 <ScrollView contentContainerStyle={{ alignItems: "center" }}>
                     <View>
                         <TextInput

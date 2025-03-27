@@ -55,8 +55,8 @@ export default function LogBook() {
         setLogs(filteredData);
     };
 
-    const contains = ({title, date, length, departure, arrival, plane, text}, query) => {
-        if(title.toLowerCase().includes(query) || departure.toLowerCase().includes(query) || arrival.toLowerCase().includes(query) || date.toLowerCase().includes(query) || plane.toLowerCase().includes(query) || text.toLowerCase().includes(query)) {
+    const contains = ({title, date, hours, minutes, departure, arrival, plane, text}, query) => {
+        if(title.toLowerCase().includes(query) || departure.toLowerCase().includes(query) || hours.toLowerCase().includes(query) || minutes.toLowerCase().includes(query) || arrival.toLowerCase().includes(query) || date.toLowerCase().includes(query) || plane.toLowerCase().includes(query) || text.toLowerCase().includes(query)) {
             return true;
         }
 
