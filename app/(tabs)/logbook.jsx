@@ -6,6 +6,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Animated, { LinearTransition } from "react-native-reanimated";
+import GestureRecognizer from 'react-native-swipe-gestures';
 import filter from "lodash.filter";
 import logsbg from "@/assets/images/logsbg.jpg";
 
@@ -72,7 +73,18 @@ export default function LogBook() {
         </Pressable>
     );
 
+    const config = {
+        velocityThreshold: 0.3,
+        directionalOffsetThreshold: 80
+    };
+
     return (
+        <GestureRecognizer
+            onSwipeLeft={() => {router.push("/(tabs)/")}}
+            onSwipeRight={() => {router.push("/(tabs)/checklists")}}
+            config={config}
+            style={styles.swipe}
+        >
         <ImageBackground source={bg === true ? logsbg: null} resizeMode="cover" style={styles.image}>
             <View style={styles.overlay} />
 
@@ -107,6 +119,7 @@ export default function LogBook() {
                 />
             </SafeAreaView>
         </ImageBackground>
+        </GestureRecognizer>
     );
 }
 
@@ -118,6 +131,11 @@ const styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor: theme.background,
         justifyContent: "center",
+    },
+    swipe: {
+        flex: 1,
+        alignItems: "center",
+        width: "100%"
     },
     overlay: {
         position: "absolute",

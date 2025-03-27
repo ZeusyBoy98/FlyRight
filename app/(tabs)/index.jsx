@@ -2,6 +2,7 @@ import { Text, View, StyleSheet, ImageBackground, Appearance, Pressable } from "
 import { colors } from "@/data/colors";
 import { useState, useEffect } from 'react';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import GestureRecognizer from 'react-native-swipe-gestures';
 import homepageImage from "@/assets/images/homepage.png";
 import { useRouter } from "expo-router";
 
@@ -72,7 +73,18 @@ export default function Index() {
   
   checkFirstLaunch();
 
+  const config = {
+    velocityThreshold: 0.3,
+    directionalOffsetThreshold: 80
+  };
+
   return (
+    <GestureRecognizer
+      onSwipeLeft={() => {router.push("/(tabs)/convert")}}
+      onSwipeRight={() => {router.push("/(tabs)/logbook")}}
+      config={config}
+      style={styles.container}
+    >
     <View style={styles.container}>
       <ImageBackground source={bg === false ? null : homepageImage} resizeMode="cover" style={styles.image}>
         <View style={styles.textContainer}>
@@ -104,6 +116,7 @@ export default function Index() {
         <Text style={styles.credit}>Image Credit: Jose Antunes @ Medium</Text>
       </ImageBackground>
     </View>
+    </GestureRecognizer>
   );
 }
 

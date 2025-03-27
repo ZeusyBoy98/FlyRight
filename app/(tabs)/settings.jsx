@@ -3,6 +3,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { colors } from "@/data/colors";
 import { Link } from "expo-router";
 import { useEffect, useState } from "react";
+import { useRouter } from "expo-router";
+import GestureRecognizer from 'react-native-swipe-gestures';
 
 const colorScheme = Appearance.getColorScheme();
 let theme = colors[colorScheme];
@@ -10,6 +12,7 @@ let theme = colors[colorScheme];
 export default function Settings() {
     const [planeBg, setPlaneBg] = useState(true);
     const [homeBg, setHomeBg] = useState(true);
+    const router = useRouter();
 
     useEffect(() => {
         const loadSetting = async () => {
@@ -45,7 +48,17 @@ export default function Settings() {
         await saveSetting("planebg", newValue);
     };
 
+    const config = {
+        velocityThreshold: 0.3,
+        directionalOffsetThreshold: 80
+    };
+
     return (
+        <GestureRecognizer
+            onSwipeRight={() => {router.push("/(tabs)/convert")}}
+            config={config}
+            style={styles.swipe}
+        >
         <View style={styles.container}>
             <View style={[styles.switch, {borderBottomLeftRadius: 0, borderBottomRightRadius: 0, borderBottomWidth: 1, borderBottomColor: "rgba(99, 99, 99, 0.23)"}]}>
                 <Text style={styles.buttonText}>Home Background</Text>
@@ -93,6 +106,7 @@ export default function Settings() {
                 <Text style={{ color: "gray", fontFamily: theme.font }}>https://github.com/ZeusyBoy98/FlyRight</Text>
             </Link>
         </View>
+        </GestureRecognizer>
     );
 }
 
@@ -103,6 +117,12 @@ const styles = StyleSheet.create({
         backgroundColor: theme.background,
         alignItems: "center",
         paddingTop: "20%",
+        width: "100%",
+    },
+    swipe: {
+        flex: 1,
+        alignItems: "center",
+        width: "100%"
     },
     switch: {
         height: 50,
