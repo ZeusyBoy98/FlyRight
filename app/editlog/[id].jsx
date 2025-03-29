@@ -6,6 +6,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import GestureRecognizer from 'react-native-swipe-gestures';
+import * as Haptics from 'expo-haptics';
 import Feather from '@expo/vector-icons/Feather';
 
 const colorScheme = Appearance.getColorScheme();
@@ -59,7 +60,7 @@ export default function EditLog() {
             } else {
                 await AsyncStorage.setItem('Logs', JSON.stringify([savedLog]))
             }
-
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
             router.push(`/logs/${id}`);
         } catch (e) {
             console.error(e)

@@ -76,7 +76,7 @@ export default function ViewChecklist() {
                             textStyle={styles.itemText}
                             iconStyle={{borderColor:theme.highlight}}
                             innerIconStyle={{borderWidth: 2}}
-                            onPress={(isChecked) => {}} 
+                            onPress={() => {Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft)}} 
                             />
                         </View>
                     ))
