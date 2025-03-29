@@ -2,11 +2,11 @@ import { useLocalSearchParams } from "expo-router";
 import { Text, View, StyleSheet, Pressable, ScrollView, Appearance, ImageBackground } from "react-native";
 import { useState, useEffect } from 'react';
 import { colors } from "@/data/colors";
-import logview from "@/assets/images/logview.jpg";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import * as Haptics from 'expo-haptics';
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import GestureRecognizer from 'react-native-swipe-gestures';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const colorScheme = Appearance.getColorScheme();
@@ -61,7 +61,18 @@ export default function ViewLog() {
         router.push(`/editlog/${id}`)
     };
 
+    const config = {
+        velocityThreshold: 0.3,
+        directionalOffsetThreshold: 80
+    };
+
     return (
+        <GestureRecognizer
+            onSwipeLeft={handlePress}
+            onSwipeRight={() => {router.push("/(tabs)/logbook")}}
+            config={config}
+            style={styles.swipe}
+        >
         <LinearGradient
             colors={['rgb(17, 132, 255)', 'rgb(15, 64, 164)', 'rgb(4, 19, 44)']}
             style={styles.background}
@@ -107,6 +118,7 @@ export default function ViewLog() {
                 </ScrollView>
             </View>
         </LinearGradient>
+        </GestureRecognizer>
     );
 }
 
@@ -117,6 +129,11 @@ const styles = StyleSheet.create({
         backgroundColor: "rgba(0,0,0,0.5)",
         alignItems: 'center',
         justifyContent: "center",
+    },
+    swipe: {
+        flex: 1,
+        alignItems: "center",
+        width: "100%"
     },
     background: {
         width: "100%",

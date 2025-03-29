@@ -12,11 +12,11 @@ export default function RootLayout() {
     <SafeAreaProvider>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="logs/[id]" options={{headerShown: false}} />
-        <Stack.Screen name="createlog/[id]" options={{headerShown: false}}/>
+        <Stack.Screen name="logs/[id]" options={{headerShown: false, gestureEnabled: false}} />
+        <Stack.Screen name="createlog/[id]" options={{headerShown: false, gestureEnable: false}}/>
         <Stack.Screen name="checklists/[id]" options={{headerShown: false}}/>
         <Stack.Screen name="createchecklist/[id]" options={{headerShown: false}}/>
-        <Stack.Screen name="editlog/[id]" options={{headerShown: false}}/>
+        <Stack.Screen name="editlog/[id]" options={{headerShown: false, gestureEnabled: false}}/>
       </Stack>
     </SafeAreaProvider>
   );

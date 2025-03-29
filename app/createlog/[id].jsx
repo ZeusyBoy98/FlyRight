@@ -4,6 +4,7 @@ import { colors } from "@/data/colors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import DateTimePicker from '@react-native-community/datetimepicker';
+import GestureRecognizer from 'react-native-swipe-gestures';
 import Feather from '@expo/vector-icons/Feather';
 
 
@@ -86,9 +87,19 @@ export default function CreateLog() {
     const showDatepicker = () => {
         showMode('date');
     };
-    
+
+    const config = {
+        velocityThreshold: 0.3,
+        directionalOffsetThreshold: 80
+    };
 
     return (
+        <GestureRecognizer
+            onSwipeLeft={addLog}
+            onSwipeRight={() => {router.push("/(tabs)/logbook")}}
+            config={config}
+            style={styles.swipe}
+        >
         <TouchableWithoutFeedback>
             <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={10} style={styles.container}>
                 <Text style={styles.heading}>Create Log</Text>
@@ -184,6 +195,7 @@ export default function CreateLog() {
                 </ScrollView>
             </KeyboardAvoidingView>
         </TouchableWithoutFeedback>
+        </GestureRecognizer>
     );
 }
 
@@ -192,6 +204,12 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: theme.background,
         alignItems: "center",
+        width: "100%",
+    },
+    swipe: {
+        flex: 1,
+        alignItems: "center",
+        width: "100%"
     },
     heading: {
         color: theme.highlight,

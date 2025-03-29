@@ -5,6 +5,7 @@ import { colors } from "@/data/colors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import DateTimePicker from '@react-native-community/datetimepicker';
+import GestureRecognizer from 'react-native-swipe-gestures';
 import Feather from '@expo/vector-icons/Feather';
 
 const colorScheme = Appearance.getColorScheme();
@@ -84,7 +85,18 @@ export default function EditLog() {
         showMode('date');
     };
 
+    const config = {
+        velocityThreshold: 0.3,
+        directionalOffsetThreshold: 80
+    };
+
     return (
+        <GestureRecognizer
+            onSwipeLeft={handleSave}
+            onSwipeRight={() => router.push(`/logs/${id}`)}
+            config={config}
+            style={styles.swipe}
+        >
         <SafeAreaView style={styles.container}>
             <TextInput 
             style={styles.titleInput}
@@ -175,6 +187,7 @@ export default function EditLog() {
                 </Pressable>
             </View>
         </SafeAreaView>
+        </GestureRecognizer>
     )
 }
 
@@ -183,6 +196,12 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: theme.background,
         alignItems: "center",
+        width: "100%",
+    },
+    swipe: {
+        flex: 1,
+        alignItems: "center",
+        width: "100%"
     },
     heading: {
         color: theme.highlight,
