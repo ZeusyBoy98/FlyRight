@@ -88,6 +88,7 @@ export default function Checklists() {
                         autoCapitalize="none" 
                         autoCorrect={false} 
                         color={theme.text}
+                        placeholderTextColor="white"
                         clearButtonMode='always' 
                         style={styles.search}
                         value={searchQuery}

@@ -91,7 +91,7 @@ export default function Settings() {
                     <Text style={styles.buttonText}>Report a Bug</Text>
                 </Pressable>
             </Link>
-            <Text style={{ color: "gray", marginTop: 30, marginBottom: 3 }}>Support The Developer</Text>
+            <Text style={{ color: "gray", marginTop: 30, marginBottom: 3 }}>Support the Developer</Text>
             <Link href="https://buymeacoffee.com/zeusyboy" style={{ marginHorizontal: "auto" }} asChild>
                 <Pressable style={styles.buttonRound}>
                     <Text style={styles.buttonText}>Buy Me a Coffee</Text>

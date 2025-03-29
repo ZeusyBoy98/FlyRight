@@ -47,13 +47,19 @@ export default function LogBook() {
         setLogs(filteredData);
     };
 
-    const contains = ({title, date, hours, minutes, departure, arrival, plane, text}, query) => {
-        if(title.toLowerCase().includes(query) || departure.toLowerCase().includes(query) || hours.toLowerCase().includes(query) || minutes.toLowerCase().includes(query) || arrival.toLowerCase().includes(query) || date.toLowerCase().includes(query) || plane.toLowerCase().includes(query) || text.toLowerCase().includes(query)) {
-            return true;
-        }
-
-        return false;
-    }
+    const contains = (log, query) => {
+        return [
+            log.title,
+            log.departure,
+            log.hours,
+            log.minutes,
+            log.arrival,
+            log.date,
+            log.plane,
+            log.text
+        ]
+        .some(field => field?.toString().toLowerCase().includes(query));
+    };
 
     const renderItem = ({ item }) => (
         <Pressable onPress={() => handlePress(item.id)} style={styles.logItem}>
@@ -90,9 +96,9 @@ export default function LogBook() {
                     placeholder='Search' 
                     autoCapitalize="none" 
                     autoCorrect={false} 
-                    color={theme.text}
                     clearButtonMode='always' 
                     style={styles.search}
+                    placeholderTextColor="white"
                     value={searchQuery}
                     fontSize={24}
                     onChangeText={(query) => handleSearch(query)}
@@ -146,6 +152,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         width: "80%",
         marginLeft: 15,
+        color: theme.text,
     },
     logItem: {
         width: "100%",
