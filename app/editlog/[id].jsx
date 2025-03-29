@@ -135,22 +135,26 @@ export default function EditLog() {
                     />                    
                 )}
             </View>
-            <TextInput
-            style={styles.dateInput}
-            maxLength={2}
-            placeholder="Hrs"
-            placeholderTextColor={theme.inPlaceholder}
-            value={log?.hours || ''}
-            onChangeText={(text) => setLog(prev => ({ ...prev, hours: text}))}
-            />
-            <TextInput
-            style={styles.dateInput}
-            maxLength={2}
-            placeholder="Min"
-            placeholderTextColor={theme.inPlaceholder}
-            value={log?.minutes || ''}
-            onChangeText={(text) => setLog(prev => ({ ...prev, minutes: text}))}
-            />
+            <View style={{flexDirection: "row", gap: 20, justifyContent: "center", alignItems: "center"}}>
+                <Text style={styles.text}>Hours:</Text>
+                <TextInput
+                style={styles.dateInput}
+                maxLength={2}
+                placeholder="Hrs"
+                placeholderTextColor={theme.inPlaceholder}
+                value={log?.hours || ''}
+                onChangeText={(text) => setLog(prev => ({ ...prev, hours: text}))}
+                />
+                <Text style={styles.text}>Minutes:</Text>
+                <TextInput
+                style={styles.dateInput}
+                maxLength={2}
+                placeholder="Min"
+                placeholderTextColor={theme.inPlaceholder}
+                value={log?.minutes || ''}
+                onChangeText={(text) => setLog(prev => ({ ...prev, minutes: text}))}
+                />
+            </View>
             <ScrollView contentContainerStyle={{ alignItems: "center" }}>
                 <TextInput
                 style={styles.textInput}
@@ -161,15 +165,15 @@ export default function EditLog() {
                 multiline={true}
                 scrollEnabled={false}
                 />
-                <View style={{ flexDirection: "row", gap: 30, marginBottom: 10, }}>
-                    <Pressable onPress={() => router.push(`/logs/${id}`)} style={styles.cancelButton}>
-                        <Text style={{ fontSize: 20, color: "white", fontFamily: theme.font }}>Cancel</Text>
-                    </Pressable>
-                    <Pressable onPress={handleSave} style={styles.createButton}>
-                        <Text style={{ fontSize: 20, fontFamily: theme.font }}>Save</Text>
-                    </Pressable>
-                </View>
             </ScrollView>
+            <View style={{ flexDirection: "row", gap: 30, marginBottom: 10, }}>
+                <Pressable onPress={() => router.push(`/logs/${id}`)} style={styles.cancelButton}>
+                    <Text style={{ fontSize: 20, color: "white", fontFamily: theme.font }}>Cancel</Text>
+                </Pressable>
+                <Pressable onPress={handleSave} style={styles.createButton}>
+                    <Text style={{ fontSize: 20, fontFamily: theme.font }}>Save</Text>
+                </Pressable>
+            </View>
         </SafeAreaView>
     )
 }
@@ -227,6 +231,11 @@ const styles = StyleSheet.create({
         minWidth: "90%",
         maxWidth: "90%",
         marginBottom: 10,
+    },
+    text: {
+        color: theme.text,
+        fontFamily: theme.font,
+        fontSize: 20,
     },
     createButton: {
         backgroundColor: "rgb(150, 239, 255)",

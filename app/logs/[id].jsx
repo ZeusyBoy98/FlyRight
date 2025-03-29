@@ -7,6 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import * as Haptics from 'expo-haptics';
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { LinearGradient } from 'expo-linear-gradient';
 
 const colorScheme = Appearance.getColorScheme();
 let theme = colors[colorScheme];
@@ -61,19 +62,33 @@ export default function ViewLog() {
     };
 
     return (
-        <ImageBackground source={bg === true ? logview : null} resizeMode="cover" style={styles.image}>
+        <LinearGradient
+            colors={['rgb(17, 132, 255)', 'rgb(15, 64, 164)', 'rgb(4, 19, 44)']}
+            style={styles.background}
+            start={{ x: 0, y: 1 }}
+            end={{ x: 0, y: 0 }}
+        >
             <View style={styles.container}>
-                <View style={{flexDirection: "row", justifyContent: "center", width: "100%", gap: 30, borderBottomColor: "gray", borderBottomWidth: 1,}}>
+                <View style={styles.header}>
                     <Text style={styles.titleText}>{log?.title}</Text>
                     <Text style={styles.dateText}>{log?.date}</Text>
                 </View>
-                <View style={{flexDirection: "row", gap: 20}}>
-                    <Text style={styles.placeText}>Hours: {log?.hours}</Text>
-                    <Text style={styles.placeText}>Minutes: {log?.minutes}</Text>
+                <View style={styles.group}>
+                    <Text style={styles.placeText}>{log?.hours} Hours</Text>
+                    <Text style={styles.placeText}>{log?.minutes} Minutes</Text>
                 </View>
-                <Text><Text style={styles.placeText}>{log?.departure}</Text><Text style={styles.placeText}> - </Text><Text style={styles.placeText}>{log?.arrival}</Text></Text>
-                <Text style={styles.placeText}>{log?.plane}</Text>
-                <View style={{width: "70%", height: 10, borderBottomColor: "gray", borderBottomWidth: 1}}></View>
+                <View style={{flexDirection: "row", gap: 10}}>
+                    <View style={styles.group}>
+                        <Text style={styles.placeText}>{log?.departure}</Text>
+                        <Text style={styles.placeText}>-</Text>
+                        <Text style={styles.placeText}>{log?.arrival}</Text>
+                    </View>
+                    <View style={styles.group}>
+                        <Text style={styles.placeText}>Aircraft:</Text>
+                        <Text style={styles.placeText}>{log?.plane}</Text>
+                    </View>
+                </View>
+                
                 <ScrollView style={styles.scrollView} contentContainerStyle={{ alignItems: 'center' }}>
                     <View style={styles.textContainer}>
                         <Text style={styles.text}>{log?.text}</Text>
@@ -91,7 +106,7 @@ export default function ViewLog() {
                     </View>
                 </ScrollView>
             </View>
-        </ImageBackground>
+        </LinearGradient>
     );
 }
 
@@ -100,14 +115,31 @@ const styles = StyleSheet.create({
         flex: 1,
         width: "100%",
         backgroundColor: "rgba(0,0,0,0.5)",
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: "center",
     },
-    image: {
+    background: {
         width: "100%",
         height: "100%",
         flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
+    },
+    header: {
+        flexDirection: "row", 
+        justifyContent: "center", 
+        width: "100%", 
+        gap: "10%", 
+        backgroundColor: theme.check,
+        borderRadius: 20,
+        marginBottom: 10,
+    },
+    group: {
+        flexDirection: "row", 
+        gap: 10, 
+        borderWidth: 1, 
+        borderColor: "gray", 
+        borderRadius: 10, 
+        padding: 10,
+        marginBottom: 10,
     },
     scrollView: {
         flex: 1,
@@ -149,8 +181,12 @@ const styles = StyleSheet.create({
         fontSize: 18,
     },
     textContainer: {
-        padding: 10,
-        maxWidth: "100%",
+        padding: 20,
+        width: "95%",
+        maxWidth: "95%",
         marginVertical: 10,
+        borderRadius: 20,
+        borderWidth: 2,
+        borderColor: 'gray',
     },
 });

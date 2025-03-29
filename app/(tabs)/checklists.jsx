@@ -76,7 +76,7 @@ export default function Checklists() {
             style={styles.swipe}
         >
             <LinearGradient
-                colors={['rgb(66, 89, 113)', 'rgb(36, 52, 85)', 'rgb(29, 29, 29)']}
+                colors={theme.mainGrad}
                 style={styles.background}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}

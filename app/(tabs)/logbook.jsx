@@ -79,10 +79,10 @@ export default function LogBook() {
             style={styles.swipe}
         >
         <LinearGradient
-            colors={['rgb(66, 89, 113)', 'rgb(36, 52, 85)', 'rgb(29, 29, 29)']}
+            colors={theme.mainGrad}
             style={styles.background}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
+            start={{ x: 1, y: 0 }}
+            end={{ x: 0, y: 1 }}
         >
             <SafeAreaView style={styles.content}>
                 <View style={{flexDirection: "row", gap: 10,}}>

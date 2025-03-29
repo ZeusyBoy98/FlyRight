@@ -14,6 +14,7 @@ export const colors = {
         inputBackground: "rgb(214, 214, 218)",
         inPlaceholder: "rgb(104, 104, 104)",
         check: "rgb(104, 104, 104)",
+        mainGrad: ['rgb(66, 89, 113)', 'rgb(36, 52, 85)', 'rgb(29, 29, 29)'],
     },
     dark: {
         background: "rgb(10, 10, 10)",
@@ -31,5 +32,6 @@ export const colors = {
         inputBackground: "rgb(40, 40, 40)",
         inPlaceholder: "rgb(188, 188, 188)",
         check: "rgb(55, 55, 55)",
+        mainGrad: ['rgb(66, 89, 113)', 'rgb(36, 52, 85)', 'rgb(29, 29, 29)'],
     },
 }
