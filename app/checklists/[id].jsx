@@ -2,7 +2,6 @@ import { useLocalSearchParams } from "expo-router";
 import { Text, View, StyleSheet, Pressable, ScrollView, Appearance, ImageBackground } from "react-native";
 import { useState, useEffect } from 'react';
 import { colors } from "@/data/colors";
-import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import * as Haptics from 'expo-haptics';
