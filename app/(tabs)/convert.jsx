@@ -73,7 +73,7 @@ export default function Convert() {
             config={config}
             style={styles.swipe}
         >
-            <ImageBackground source={bg === true ? convertbg : null} resizeMode="cover" style={styles.image}>
+            <ImageBackground source={bg === false ? null : convertbg} resizeMode="cover" style={styles.image}>
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                     <KeyboardAvoidingView behavior="padding" style={styles.container}>
                         <Text style={styles.heading}>Convert</Text>

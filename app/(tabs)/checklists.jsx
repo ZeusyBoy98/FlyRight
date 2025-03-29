@@ -7,8 +7,8 @@ import { useRouter } from "expo-router";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Animated, { LinearTransition } from "react-native-reanimated";
 import GestureRecognizer from 'react-native-swipe-gestures';
+import { LinearGradient } from 'expo-linear-gradient';
 import filter from "lodash.filter";
-import checklistsbg from "@/assets/images/checklistsbg.jpg"
 
 const colorScheme = Appearance.getColorScheme();
 let theme = colors[colorScheme];
@@ -17,7 +17,6 @@ export default function Checklists() {
     const [checklists, setChecklists] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [fullData, setFullData] = useState([]);
-    const [bg, setBg] = useState(null);
     const router = useRouter();
 
     useEffect(() => {
@@ -33,14 +32,6 @@ export default function Checklists() {
             }
         };
         fetchData();
-    }, []);
-
-    useEffect(() => {
-        const loadSetting = async () => {
-            const bgValue = await AsyncStorage.getItem("planebg");
-            setBg(bgValue === "true");
-        };
-        loadSetting();
     }, []);
 
     const handlePress = (id) => {
@@ -84,68 +75,65 @@ export default function Checklists() {
             config={config}
             style={styles.swipe}
         >
-        <ImageBackground source={bg === true ? checklistsbg : null} resizeMode="cover" style={styles.image}>
-            <View style={styles.overlay} />
-
-            <SafeAreaView style={styles.content}>
-                <View style={{flexDirection: "row", gap: 10,}}>
-                    <TextInput 
-                    placeholder='Search' 
-                    autoCapitalize="none" 
-                    autoCorrect={false} 
-                    color={theme.text}
-                    clearButtonMode='always' 
-                    style={styles.search}
-                    value={searchQuery}
-                    fontSize={24}
-                    onChangeText={(query) => handleSearch(query)}
+            <LinearGradient
+                colors={['rgb(66, 89, 113)', 'rgb(36, 52, 85)', 'rgb(29, 29, 29)']}
+                style={styles.background}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+            >
+                <SafeAreaView style={styles.content}>
+                    <View style={{flexDirection: "row", gap: 10,}}>
+                        <TextInput 
+                        placeholder='Search' 
+                        autoCapitalize="none" 
+                        autoCorrect={false} 
+                        color={theme.text}
+                        clearButtonMode='always' 
+                        style={styles.search}
+                        value={searchQuery}
+                        fontSize={24}
+                        onChangeText={(query) => handleSearch(query)}
+                        />
+                        <Pressable 
+                        onPress={() => {
+                            const newId = checklists.length > 0 ? Math.max(...checklists.map(checklist => checklist.id)) + 1 : 1;
+                            router.push(`/createchecklist/${newId}`);
+                        }} 
+                        >
+                            <MaterialCommunityIcons name="plus-circle" size={50} color={theme.addButton} />
+                        </Pressable>
+                    </View>
+                    <Animated.FlatList
+                        data={checklists}
+                        renderItem={renderItem}
+                        keyExtractor={(item) => item.id}
+                        contentContainerStyle={{ flexGrow: 1 }}
+                        itemLayoutAnimation={LinearTransition}
                     />
-                    <Pressable 
-                    onPress={() => {
-                        const newId = checklists.length > 0 ? Math.max(...checklists.map(checklist => checklist.id)) + 1 : 1;
-                        router.push(`/createchecklist/${newId}`);
-                    }} 
-                    >
-                        <MaterialCommunityIcons name="plus-circle" size={50} color={theme.addButton} />
-                    </Pressable>
-                </View>
-                <Animated.FlatList
-                    data={checklists}
-                    renderItem={renderItem}
-                    keyExtractor={(item) => item.id}
-                    contentContainerStyle={{ flexGrow: 1 }}
-                    itemLayoutAnimation={LinearTransition}
-                />
-            </SafeAreaView>
-        </ImageBackground>
+                </SafeAreaView>
+            </LinearGradient>
         </GestureRecognizer>
     );
 }
 
 const styles = StyleSheet.create({
-    image: {
-        width: "100%",
-        height: "100%",
-        flex: 1,
-        alignItems: "center",
-        backgroundColor: theme.background,
-        justifyContent: "center",
-    },
     swipe: {
         flex: 1,
         alignItems: "center",
         width: "100%"
     },
-    overlay: {
-        position: "absolute",
+    content: {
         width: "100%",
         height: "100%",
-        backgroundColor: "rgba(0,0,0,0.5)"
-    },
-    content: {
         flex: 1,
-        width: "100%",
+        alignItems: "center",
+        justifyContent: "center",
         paddingTop: "10%",
+    },
+    background: {
+        width: "100%",
+        height: "100%",
+        flex: 1,
     },
     search: {
         paddingHorizontal: 20,
@@ -158,16 +146,18 @@ const styles = StyleSheet.create({
     },
     checklistItem: {
         width: "100%",
-        paddingVertical: 20,
-        borderBottomColor: "gray",
-        borderBottomWidth: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginVertical: 10,
     },
     checklistContainer: {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        width: "100%",
-        paddingHorizontal: 10,
+        width: "95%",
+        padding: 15,
+        backgroundColor: theme.check,
+        borderRadius: 20, 
     },
     planeText: {
         fontSize: 30,

@@ -13,6 +13,7 @@ export const colors = {
         homeTrans: "rgba(0, 0, 0, 0.5)",
         inputBackground: "rgb(214, 214, 218)",
         inPlaceholder: "rgb(104, 104, 104)",
+        check: "rgb(104, 104, 104)",
     },
     dark: {
         background: "rgb(10, 10, 10)",
@@ -29,5 +30,6 @@ export const colors = {
         dateColor: "white",
         inputBackground: "rgb(40, 40, 40)",
         inPlaceholder: "rgb(188, 188, 188)",
+        check: "rgb(55, 55, 55)",
     },
 }

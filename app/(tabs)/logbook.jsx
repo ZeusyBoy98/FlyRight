@@ -7,8 +7,8 @@ import { useRouter } from "expo-router";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Animated, { LinearTransition } from "react-native-reanimated";
 import GestureRecognizer from 'react-native-swipe-gestures';
+import { LinearGradient } from 'expo-linear-gradient';
 import filter from "lodash.filter";
-import logsbg from "@/assets/images/logsbg.jpg";
 
 const colorScheme = Appearance.getColorScheme();
 let theme = colors[colorScheme];
@@ -17,7 +17,6 @@ export default function LogBook() {
     const [logs, setLogs] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [fullData, setFullData] = useState([]);
-    const [bg, setBg] = useState(null);
     const router = useRouter();
 
     useEffect(() => {
@@ -33,14 +32,6 @@ export default function LogBook() {
             }
         };
         fetchData();
-    }, []);
-
-    useEffect(() => {
-        const loadSetting = async () => {
-            const bgValue = await AsyncStorage.getItem("planebg");
-            setBg(bgValue === "true");
-        };
-        loadSetting();
     }, []);
 
     const handlePress = (id) => {
@@ -67,8 +58,10 @@ export default function LogBook() {
     const renderItem = ({ item }) => (
         <Pressable onPress={() => handlePress(item.id)} style={styles.logItem}>
             <View style={styles.logContainer}>
-                <Text style={styles.titleText}>{item.title}</Text>
-                <Text style={styles.dateText}>{item.date}</Text>
+                <View style={{flexDirection: "row"}}>
+                    <Text style={styles.titleText}>{item.title}</Text>
+                    <Text style={styles.dateText}>{item.date}</Text>
+                </View>
             </View>
         </Pressable>
     );
@@ -85,9 +78,12 @@ export default function LogBook() {
             config={config}
             style={styles.swipe}
         >
-        <ImageBackground source={bg === true ? logsbg: null} resizeMode="cover" style={styles.image}>
-            <View style={styles.overlay} />
-
+        <LinearGradient
+            colors={['rgb(66, 89, 113)', 'rgb(36, 52, 85)', 'rgb(29, 29, 29)']}
+            style={styles.background}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+        >
             <SafeAreaView style={styles.content}>
                 <View style={{flexDirection: "row", gap: 10,}}>
                     <TextInput 
@@ -114,38 +110,32 @@ export default function LogBook() {
                     data={logs}
                     renderItem={renderItem}
                     keyExtractor={(item) => item.id}
-                    contentContainerStyle={{ flexGrow: 1 }}
+                    contentContainerStyle={{ flexGrow: 1,}}
                     itemLayoutAnimation={LinearTransition}
                 />
             </SafeAreaView>
-        </ImageBackground>
+        </LinearGradient>
         </GestureRecognizer>
     );
 }
 
 const styles = StyleSheet.create({
-    image: {
-        width: "100%",
-        height: "100%",
-        flex: 1,
-        alignItems: "center",
-        backgroundColor: theme.background,
-        justifyContent: "center",
-    },
     swipe: {
         flex: 1,
         alignItems: "center",
         width: "100%"
     },
-    overlay: {
-        position: "absolute",
+    background: {
         width: "100%",
         height: "100%",
-        backgroundColor: "rgba(0,0,0,0.5)"
+        flex: 1,
     },
     content: {
-        flex: 1,
         width: "100%",
+        height: "100%",
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
         paddingTop: "10%",
     },
     search: {
@@ -159,28 +149,34 @@ const styles = StyleSheet.create({
     },
     logItem: {
         width: "100%",
-        paddingVertical: 20,
-        borderBottomColor: "gray",
-        borderBottomWidth: 1,
+        marginVertical: 10,
+        justifyContent: "center",
+        alignItems: "flex-start",
+        minWidth: "90%",
+        paddingHorizontal: "5%",
     },
     logContainer: {
+        backgroundColor: theme.check,
+        paddingVertical: 15,
+        borderRadius: 20,
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
         width: "100%",
-        paddingHorizontal: 10,
+        paddingHorizontal: 15,
     },
     dateText: {
         fontSize: 30,
         fontFamily: theme.font,
         color: "white",
-        flexShrink: 1,
+        textAlign: "right",
     },
     titleText: {
         fontSize: 30,
         fontFamily: theme.font,
         color: theme.highlight,
-        textAlign: "right",
+        textAlign: "left",
         flexShrink: 1,
+        width: "100%",
     },
 });

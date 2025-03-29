@@ -143,7 +143,7 @@ export default function CreateLog() {
                         />                    
                     )}
                 </View>
-                <View style={{flexDirection: "row", gap: 20}}>
+                <View style={{flexDirection: "row", gap: 20,}}>
                     <TextInput
                         style={styles.dateInput}
                         maxLength={2}
