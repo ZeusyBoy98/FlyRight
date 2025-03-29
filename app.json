@@ -2,7 +2,7 @@
   "expo": {
     "name": "FlyRight",
     "slug": "flyright",
-    "version": "0.2.5",
+    "version": "0.3.0",
     "orientation": "portrait",
     "icon": "./assets/images/FlyRight.png",
     "scheme": "myapp",
