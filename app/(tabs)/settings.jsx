@@ -83,25 +83,25 @@ export default function Settings() {
             <Text style={{ color: "gray", marginTop: 3, marginBottom: 20 }}>Restart the app after changing settings</Text>
             <Link href="mailto:wetcementstudios@gmail.com?subject=FeedBack" style={{ marginHorizontal: "auto" }} asChild>
                 <Pressable style={styles.buttonTop}>
-                    <Text style={styles.buttonText}>FeedBack</Text>
+                    <Text style={styles.buttonText}>Feedback</Text>
                 </Pressable>
             </Link>
             <Link href="https://github.com/ZeusyBoy98/FlyRight/issues" style={{ marginHorizontal: "auto" }} asChild>
                 <Pressable style={styles.buttonBottom}>
-                    <Text style={styles.buttonText}>Report A Bug</Text>
+                    <Text style={styles.buttonText}>Report a Bug</Text>
                 </Pressable>
             </Link>
             <Text style={{ color: "gray", marginTop: 30, marginBottom: 3 }}>Support The Developer</Text>
             <Link href="https://buymeacoffee.com/zeusyboy" style={{ marginHorizontal: "auto" }} asChild>
                 <Pressable style={styles.buttonRound}>
-                    <Text style={styles.buttonText}>Buy Me A Coffee</Text>
+                    <Text style={styles.buttonText}>Buy Me a Coffee</Text>
                 </Pressable>
             </Link>
             <Text style={{ marginTop: 30 }}>
                 <Text style={{ color: "gray", fontFamily: theme.font }}>Made with ❤️ by </Text>
                 <Text style={{ color: "gray", fontFamily: theme.font, fontWeight: "bold" }}>ZeusyBoy</Text>
             </Text>
-            <Text style={{ color: "gray", fontFamily: theme.font, marginTop: 50 }}>Check FlyRight out on github:</Text>
+            <Text style={{ color: "gray", fontFamily: theme.font, marginTop: 50 }}>Check FlyRight out on GitHub:</Text>
             <Link href="https://github.com/ZeusyBoy98/FlyRight" style={{ marginHorizontal: "auto" }} asChild>
                 <Text style={{ color: "gray", fontFamily: theme.font }}>https://github.com/ZeusyBoy98/FlyRight</Text>
             </Link>
