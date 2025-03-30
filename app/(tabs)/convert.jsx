@@ -5,6 +5,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import convertbg from "@/assets/images/convertbg.jpg";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import GestureRecognizer from 'react-native-swipe-gestures';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from "expo-router";
 
 const colorScheme = Appearance.getColorScheme();
@@ -73,7 +74,12 @@ export default function Convert() {
             config={config}
             style={styles.swipe}
         >
-            <ImageBackground source={bg === false ? null : convertbg} resizeMode="cover" style={styles.image}>
+            <LinearGradient
+                colors={theme.mainGrad}
+                style={styles.background}
+                start={{ x: 1, y: 1 }}
+                end={{ x: 0, y: 0 }}
+            >
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                     <KeyboardAvoidingView behavior="padding" style={styles.container}>
                         <Text style={styles.heading}>Convert</Text>
@@ -225,7 +231,7 @@ export default function Convert() {
                         </ScrollView>
                     </KeyboardAvoidingView>
                 </TouchableWithoutFeedback>
-            </ImageBackground>
+            </LinearGradient>
         </GestureRecognizer>
     )
 }
@@ -234,22 +240,20 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: "center",
-        backgroundColor: "rgba(0,0,0,0.5)",
         paddingTop: "10%",
+        alignItems: "center",
+        justifyContent: "center",
         width: "100%"
+    },
+    background: {
+        width: "100%",
+        height: "100%",
+        flex: 1,
     },
     swipe: {
         flex: 1,
         alignItems: "center",
         width: "100%"
-    },
-    image: {
-        width: "100%",
-        height: "100%",
-        flex: 1,
-        alignItems: "center",
-        backgroundColor: theme.background,
-        justifyContent: "center",
     },
     same: {
         flexDirection: "row",
@@ -268,18 +272,16 @@ const styles = StyleSheet.create({
     },
     input: {
         fontSize: 25,
-        padding: 10,
-        borderColor: "gray",
-        borderWidth: 2,
-        borderRadius: 5,
+        padding: 15,
+        borderRadius: 20,
         color: "white",
+        backgroundColor: theme.check,
     },
     output: {
         color: "white",
         fontSize: 25,
-        borderColor: "gray",
-        borderWidth: 2,
-        borderRadius: 5,
-        padding: 10,
+        borderRadius: 20,
+        padding: 15,
+        backgroundColor: theme.check,
     },
 })
