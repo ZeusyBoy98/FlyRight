@@ -6,6 +6,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import * as Haptics from 'expo-haptics';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import GestureRecognizer from 'react-native-swipe-gestures';
 import checklistbg from "@/assets/images/checklistbg.jpg";
 
 const colorScheme = Appearance.getColorScheme();
@@ -56,42 +58,58 @@ export default function ViewChecklist() {
         }
     };
 
+    const config = {
+        velocityThreshold: 0.3,
+        directionalOffsetThreshold: 80
+    };
+
     return (
-        <ImageBackground source={bg === true ? checklistbg : null} resizeMode="cover" style={styles.container}>
-            <View style={styles.headingContainer}>
-                <Text style={styles.planeText}>{checklist?.plane}</Text>
-                <Text style={styles.planeText}>{checklist?.title}</Text>
-            </View>
+        <GestureRecognizer
+            onSwipeLeft={() => {router.push( `/editchecklist/${id}`)}}
+            onSwipeRight={() => {router.push("/(tabs)/checklists")}}
+            config={config}
+            style={styles.swipe}
+        >
+            <ImageBackground source={bg === true ? checklistbg : null} resizeMode="cover" style={styles.container}>
+                <View style={styles.headingContainer}>
+                    <Text style={styles.planeText}>{checklist?.plane}</Text>
+                    <Text style={styles.planeText}>{checklist?.title}</Text>
+                </View>
 
-            <ScrollView style={styles.scrollView} contentContainerStyle={{ alignItems: 'center' }}>
-                {checklist?.items && checklist.items.length > 0 ? (
-                    checklist.items.map(item => (
-                        <View key={item.id} style={styles.itemContainer}>
-                            <BouncyCheckbox 
-                            size={25}
-                            fillColor={theme.highlight}
-                            unFillColor="white"
-                            text={item.text}
-                            textStyle={styles.itemText}
-                            iconStyle={{borderColor:theme.highlight}}
-                            innerIconStyle={{borderWidth: 2}}
-                            onPress={() => {Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft)}} 
-                            />
-                        </View>
-                    ))
-                ) : (
-                    <Text style={styles.noItemsText}>No items in this checklist</Text>
-                )}
-            </ScrollView>
+                <ScrollView style={styles.scrollView} contentContainerStyle={{ alignItems: 'center' }}>
+                    {checklist?.items && checklist.items.length > 0 ? (
+                        checklist.items.map(item => (
+                            <View key={item.id} style={styles.itemContainer}>
+                                <BouncyCheckbox 
+                                size={25}
+                                fillColor={theme.highlight}
+                                unFillColor="white"
+                                text={item.text}
+                                textStyle={styles.itemText}
+                                iconStyle={{borderColor:theme.highlight}}
+                                innerIconStyle={{borderWidth: 2}}
+                                onPress={() => {Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft)}} 
+                                />
+                            </View>
+                        ))
+                    ) : (
+                        <Text style={styles.noItemsText}>No items in this checklist</Text>
+                    )}
+                </ScrollView>
 
-            <Pressable onPress={() => router.push("/(tabs)/checklists")} style={styles.exitButton}>
-                <Text style={styles.exitButtonText}>Exit</Text>
-            </Pressable>
-
-            <Pressable onPress={removeChecklist} style={styles.deleteChecklist}>
-                <Text style={styles.deleteChecklistText}>Delete Checklist</Text>
-            </Pressable>
-        </ImageBackground>
+                <View style={{flexDirection: "row", gap: 30}}>
+                    <Pressable onPress={() => router.push("/(tabs)/checklists")} style={styles.exitButton}>
+                        <Text style={styles.exitButtonText}>Exit</Text>
+                    </Pressable>
+                    <Pressable onPress={() => router.push( `/editchecklist/${id}`)}>
+                        <MaterialCommunityIcons name="pencil" size={43} color="white" />
+                    </Pressable>
+                </View>
+                <Pressable onPress={removeChecklist} style={styles.deleteChecklist}>
+                    <Text style={styles.deleteChecklistText}>Delete Checklist</Text>
+                </Pressable>
+            </ImageBackground>
+        </GestureRecognizer>
     );
 }
 
@@ -101,6 +119,11 @@ const styles = StyleSheet.create({
         width: "100%",
         backgroundColor: theme.background,
         alignItems: 'center',
+    },
+    swipe: {
+        flex: 1,
+        alignItems: "center",
+        width: "100%"
     },
     headingContainer: {
         flexDirection: "row", 
