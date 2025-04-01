@@ -1,11 +1,13 @@
 import { 
     Text, View, TextInput, Appearance, Pressable, StyleSheet, 
-    KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard 
+    KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Modal
 } from "react-native";
 import Animated from "react-native-reanimated";
 import { useState, useEffect } from 'react';
 import { colors } from "@/data/colors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ColorPicker from 'react-native-wheel-color-picker'   
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { useRouter } from "expo-router";
 import * as Haptics from 'expo-haptics';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
@@ -16,9 +18,11 @@ let theme = colors[colorScheme];
 export default function CreateChecklist() {
     const [plane, setPlane] = useState("");
     const [title, setTitle] = useState("");
+    const [checklistColor, setChecklistColor] = useState(theme.highlight);
     const [checklists, setChecklists] = useState([]);
     const [items, setItems] = useState([]);  
     const [newItem, setNewItem] = useState(""); 
+    const [showModal, setShowModal] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
@@ -53,7 +57,7 @@ export default function CreateChecklist() {
         const newId = highestId + 1;
     
         const newChecklists = [
-            { id: newId, plane, title, items },
+            { id: newId, plane, title, checklistColor, items  },
             ...checklists,
         ];
         setChecklists(newChecklists);
@@ -62,6 +66,7 @@ export default function CreateChecklist() {
 
         setPlane("");
         setTitle("");
+        setChecklistColor(theme.highlight);
         setItems([]); 
         
         router.push('/(tabs)/checklists');
@@ -79,6 +84,10 @@ export default function CreateChecklist() {
     const removeItem = (id) => {
         setItems(items.filter(item => item.id !== id));
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    };
+
+    const onColorChange = checklistColor => {
+        setChecklistColor(checklistColor);
     };
 
     return (
@@ -105,6 +114,28 @@ export default function CreateChecklist() {
                         onChangeText={setTitle}
                     />
                 </View>
+
+                <Pressable onPress={() => setShowModal(true)}>
+                    <Ionicons name="color-palette" size={40} color={checklistColor} />
+                </Pressable>
+
+                <Modal visible={showModal} animationType="slide" transparent={true}>
+                    <View style={styles.modal}>
+                        <ColorPicker
+                            color={checklistColor}
+                            onColorChange={(checklistColor) => onColorChange(checklistColor)}
+                            thumbSize={30}
+                            sliderSize={30}
+                            noSnap={true}
+                            row={false}
+                            swatches={false}
+                            sliderHidden={true}
+                        />
+                        <Pressable style={styles.ok} onPress={() => setShowModal(false)}>
+                            <Text style={{ color: theme.text, fontWeight: "bold", fontSize: 20 }}>Ok</Text>
+                        </Pressable>
+                    </View>
+                </Modal>
 
                 {/* Checklist Items */}
                 <View style={styles.itemsContainer}>
@@ -183,6 +214,40 @@ const styles = StyleSheet.create({
         padding: 10,
         marginBottom: 10,
         width: 140,
+    },
+    button: {
+        backgroundColor: "rgb(0, 234, 255)",
+        color: "black",
+        fontWeight: "bold",
+        padding: 10,
+        borderRadius: 10,
+        marginTop: 20,
+        width: "90%",
+        alignItems: "center",
+    },
+    ok: {
+        backgroundColor: "rgb(0, 234, 255)",
+        borderRadius: 10,
+        padding: 10,
+    },
+    buttonText: {
+        color: theme.text,
+        fontFamily: theme.font,
+    },
+    modal: {
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        height: '30%',
+        marginTop: 'auto',
+        backgroundColor: theme.modal,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        paddingBottom: 20,
+        paddingHorizontal: 20,
+    },
+    picker: {
+        width: '90%',
+        marginTop: 20
     },
     itemsContainer: {
         width: "90%",

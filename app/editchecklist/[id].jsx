@@ -1,6 +1,6 @@
 import { 
     Text, View, TextInput, Appearance, Pressable, StyleSheet, 
-    KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard 
+    KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Modal 
 } from "react-native";
 import Animated from "react-native-reanimated";
 import { useState, useEffect } from 'react';
@@ -9,6 +9,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import * as Haptics from 'expo-haptics';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import ColorPicker from 'react-native-wheel-color-picker'   
+import Ionicons from '@expo/vector-icons/Ionicons';
 import GestureRecognizer from 'react-native-swipe-gestures';
 
 const colorScheme = Appearance.getColorScheme();
@@ -19,7 +21,9 @@ export default function EditChecklist() {
     const [plane, setPlane] = useState("");
     const [title, setTitle] = useState("");
     const [items, setItems] = useState([]);
+    const [checklistColor, setChecklistColor] = useState(theme.highlight);
     const [newItem, setNewItem] = useState(""); 
+    const [showModal, setShowModal] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
@@ -32,6 +36,7 @@ export default function EditChecklist() {
                     setPlane(checklist.plane);
                     setTitle(checklist.title);
                     setItems(checklist.items);
+                    setChecklistColor(checklist.checklistColor);
                 }
             } catch (e) {
                 console.error(e);
@@ -45,7 +50,7 @@ export default function EditChecklist() {
             const jsonValue = await AsyncStorage.getItem("Checklists");
             const checklists = jsonValue ? JSON.parse(jsonValue) : [];
             const updatedChecklists = checklists.map(c => 
-                c.id.toString() === id ? { ...c, plane, title, items } : c
+                c.id.toString() === id ? { ...c, plane, title, checklistColor, items } : c
             );
             await AsyncStorage.setItem("Checklists", JSON.stringify(updatedChecklists));
             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
@@ -70,6 +75,10 @@ export default function EditChecklist() {
     const config = {
         velocityThreshold: 0.3,
         directionalOffsetThreshold: 80
+    };
+
+    const onColorChange = checklistColor => {
+        setChecklistColor(checklistColor);
     };
 
     return (
@@ -100,6 +109,28 @@ export default function EditChecklist() {
                         onChangeText={setTitle}
                     />
                 </View>
+
+                <Pressable onPress={() => setShowModal(true)}>
+                    <Ionicons name="color-palette" size={40} color={checklistColor} />
+                </Pressable>
+
+                <Modal visible={showModal} animationType="slide" transparent={true}>
+                    <View style={styles.modal}>
+                        <ColorPicker
+                            color={checklistColor}
+                            onColorChange={(checklistColor) => onColorChange(checklistColor)}
+                            thumbSize={30}
+                            sliderSize={30}
+                            noSnap={true}
+                            row={false}
+                            swatches={false}
+                            sliderHidden={true}
+                        />
+                        <Pressable style={styles.ok} onPress={() => setShowModal(false)}>
+                            <Text style={{ color: theme.text, fontWeight: "bold", fontSize: 20 }}>Ok</Text>
+                        </Pressable>
+                    </View>
+                </Modal>
 
                 <View style={styles.itemsContainer}>
                     <Text style={styles.subheading}>Checklist Items</Text>
@@ -187,6 +218,40 @@ const styles = StyleSheet.create({
         padding: 10,
         marginBottom: 10,
         width: 140,
+    },
+    button: {
+        backgroundColor: "rgb(0, 234, 255)",
+        color: "black",
+        fontWeight: "bold",
+        padding: 10,
+        borderRadius: 10,
+        marginTop: 20,
+        width: "90%",
+        alignItems: "center",
+    },
+    ok: {
+        backgroundColor: "rgb(0, 234, 255)",
+        borderRadius: 10,
+        padding: 10,
+    },
+    buttonText: {
+        color: theme.text,
+        fontFamily: theme.font,
+    },
+    modal: {
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        height: '30%',
+        marginTop: 'auto',
+        backgroundColor: theme.modal,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        paddingBottom: 20,
+        paddingHorizontal: 20,
+    },
+    picker: {
+        width: '90%',
+        marginTop: 20
     },
     itemsContainer: {
         width: "90%",

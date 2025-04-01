@@ -15,6 +15,7 @@ export const colors = {
         inPlaceholder: "rgb(104, 104, 104)",
         check: "rgb(104, 104, 104)",
         mainGrad: ['rgb(88, 123, 162)', 'rgb(36, 52, 85)', 'rgb(0, 36, 104)'],
+        modal: "rgb(255, 255, 255)",
     },
     dark: {
         background: "rgb(10, 10, 10)",
@@ -33,5 +34,6 @@ export const colors = {
         inPlaceholder: "rgb(188, 188, 188)",
         check: "rgb(55, 55, 55)",
         mainGrad: ['rgb(66, 89, 113)', 'rgb(36, 52, 85)', 'rgb(29, 29, 29)'],
+        modal: "rgb(50, 50, 50)",
     },
 }

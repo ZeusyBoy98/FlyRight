@@ -4,10 +4,13 @@ import { useState, useEffect } from 'react';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import GestureRecognizer from 'react-native-swipe-gestures';
 import homepageImage from "@/assets/images/homepage.png";
+import { enableScreens } from 'react-native-screens';
 import { useRouter } from "expo-router";
 
 const colorScheme = Appearance.getColorScheme();
 let theme = colors[colorScheme];
+
+enableScreens();
 
 export default function Index() {
   const [log, setLog] = useState({});

@@ -82,7 +82,7 @@ export default function ViewChecklist() {
                             <View key={item.id} style={styles.itemContainer}>
                                 <BouncyCheckbox 
                                 size={25}
-                                fillColor={theme.highlight}
+                                fillColor={checklist?.checklistColor}
                                 unFillColor="white"
                                 text={item.text}
                                 textStyle={styles.itemText}
