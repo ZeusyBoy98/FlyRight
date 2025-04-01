@@ -3,6 +3,6 @@
 The best flightsim companion app.
 
 # Features
-• Logbook creation and viewing <br/>
-• Create your own interactive checklists <br/>
-• Convert commonly used aviation units <br/>
+• Create, edit, and view your logs <br/>
+• Create, edit and interact with your own customizable checklists checklists <br/>
+• Convert between commonly used aviation units <br/>
