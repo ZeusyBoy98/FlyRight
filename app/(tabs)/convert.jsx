@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: "center",
-        paddingTop: "10%",
+        paddingTop: "15%",
         alignItems: "center",
         justifyContent: "center",
         width: "100%"

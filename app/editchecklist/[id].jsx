@@ -186,6 +186,7 @@ const styles = StyleSheet.create({
         backgroundColor: theme.background,
         alignItems: "center",
         width: "100%",
+        paddingTop: "5%",
     },
     swipe: {
         flex: 1,

@@ -148,6 +148,7 @@ const styles = StyleSheet.create({
         backgroundColor: theme.check,
         borderRadius: 20,
         marginBottom: 10,
+        paddingTop: "5%",
     },
     group: {
         flexDirection: "row", 

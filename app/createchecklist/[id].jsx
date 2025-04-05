@@ -187,6 +187,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: theme.background,
         alignItems: "center",
+        paddingTop: "5%",
     },
     heading: {
         color: theme.highlight,
