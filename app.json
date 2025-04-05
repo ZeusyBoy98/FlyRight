@@ -11,7 +11,7 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.zeusyboy.flyright",
+      "bundleIdentifier": "com.zeusyboy.flyrightapp",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
