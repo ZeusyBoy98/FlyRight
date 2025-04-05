@@ -10,43 +10,7 @@ const colorScheme = Appearance.getColorScheme();
 let theme = colors[colorScheme];
 
 export default function Settings() {
-    const [planeBg, setPlaneBg] = useState(true);
-    const [homeBg, setHomeBg] = useState(true);
     const router = useRouter();
-
-    useEffect(() => {
-        const loadSetting = async () => {
-            const storedValue2 = await AsyncStorage.getItem("homebg");
-            if (storedValue2 !== null) {
-                setHomeBg(JSON.parse(storedValue2));
-            }
-            const storedValue = await AsyncStorage.getItem("planebg");
-            if (storedValue !== null) {
-                setPlaneBg(JSON.parse(storedValue));
-            }
-        };
-        loadSetting();
-    }, []);
-
-    const saveSetting = async (key, value) => {
-        try {
-            await AsyncStorage.setItem(key, JSON.stringify(value));
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const toggleHome = async () => {
-        const newValue = !homeBg;
-        setHomeBg(newValue);
-        await saveSetting("homebg", newValue);
-    };
-
-    const toggleSwitch = async () => {
-        const newValue = !planeBg;
-        setPlaneBg(newValue);
-        await saveSetting("planebg", newValue);
-    };
 
     const config = {
         velocityThreshold: 0.3,
@@ -60,27 +24,6 @@ export default function Settings() {
             style={styles.swipe}
         >
         <View style={styles.container}>
-            <View style={[styles.switch, {borderBottomLeftRadius: 0, borderBottomRightRadius: 0, borderBottomWidth: 1, borderBottomColor: "rgba(99, 99, 99, 0.23)"}]}>
-                <Text style={styles.buttonText}>Home Background</Text>
-                <Switch
-                    trackColor={{ false: "#767577", true: "rgb(97, 229, 95)" }}
-                    thumbColor="white"
-                    ios_backgroundColor="#3e3e3e"
-                    onValueChange={toggleHome}
-                    value={homeBg}
-                />
-            </View>
-            <View style={[styles.switch, {borderTopLeftRadius: 0, borderTopRightRadius: 0,}]}>
-                <Text style={styles.buttonText}>Airplane Backgrounds</Text>
-                <Switch
-                    trackColor={{ false: "#767577", true: "rgb(97, 229, 95)" }}
-                    thumbColor="white"
-                    ios_backgroundColor="#3e3e3e"
-                    onValueChange={toggleSwitch}
-                    value={planeBg}
-                />
-            </View>
-            <Text style={{ color: "gray", marginTop: 3, marginBottom: 20 }}>Restart the app after changing settings</Text>
             <Link href="mailto:wetcementstudios@gmail.com?subject=FeedBack" style={{ marginHorizontal: "auto" }} asChild>
                 <Pressable style={styles.buttonTop}>
                     <Text style={styles.buttonText}>Feedback</Text>

@@ -17,7 +17,6 @@ export default function Index() {
   const [logs, setLogs] = useState([]);
   const [checklist, setChecklist] = useState({});
   const [checklists, setChecklists] = useState({});
-  const [bg, setBg] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -48,16 +47,8 @@ export default function Index() {
       }
   };
 
-    fetchLogData();
-    fetchChecklistData();
-  }, []);
-
-  useEffect(() => {
-    const loadSetting = async () => {
-        const bgValue = await AsyncStorage.getItem("homebg");
-        setBg(bgValue === "true");
-    };
-    loadSetting();
+  fetchLogData();
+  fetchChecklistData();
 }, []);
 
   const checkFirstLaunch = async () => {
@@ -89,7 +80,7 @@ export default function Index() {
       style={styles.container}
     >
     <View style={styles.container}>
-      <ImageBackground source={bg === false ? null : homepageImage} resizeMode="cover" style={styles.image}>
+      <ImageBackground source={homepageImage} resizeMode="cover" style={styles.image}>
         <View style={styles.textContainer}>
           <Text style={styles.heading}>Fly</Text>
           <Text style={styles.right}>Right</Text>
