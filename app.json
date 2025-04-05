@@ -10,7 +10,7 @@
     "newArchEnabled": true,
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "com.zeusyboy.flyrightapp",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false

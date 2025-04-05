@@ -125,6 +125,7 @@ const styles = StyleSheet.create({
         borderBottomColor: "gray", 
         borderBottomWidth: 1,
         marginBottom: 10,
+        paddingTop: "7%",
     },
     planeText: {
         color: theme.highlight,
