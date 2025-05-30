@@ -6,3 +6,7 @@ The best flightsim companion app.
 • Create, edit, and view your logs <br/>
 • Create, edit and interact with your own customizable checklists checklists <br/>
 • Convert between commonly used aviation units <br/>
+
+ <!-- LANGUAGES BREAKDOWN START -->
+
+ <!-- LANGUAGES BREAKDOWN END -->
