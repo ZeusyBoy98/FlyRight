@@ -8,5 +8,17 @@ The best flightsim companion app.
 • Convert between commonly used aviation units <br/>
 
  <!-- LANGUAGES BREAKDOWN START -->
+```
+[ LANGUAGES BREAKDOWN ]
 
+JavaScript   --> 110 lines
+TypeScript   --> 651 lines
+JSX          --> 2,782 lines
+Vue.js       --> 0 lines
+PHP          --> 0 lines
+C#           --> 0 lines
+Other        --> 81 lines
+
+[ TOTAL LINES OF CODE: 3,624 ]
+```
  <!-- LANGUAGES BREAKDOWN END -->
