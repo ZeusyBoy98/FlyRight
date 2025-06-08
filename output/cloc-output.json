@@ -1,11 +1,11 @@
 {"header" : {
   "cloc_url"           : "github.com/AlDanial/cloc",
   "cloc_version"       : "1.98",
-  "elapsed_seconds"    : 0.028317928314209,
-  "n_files"            : 48,
-  "n_lines"            : 3957,
-  "files_per_second"   : 1695.03925101453,
-  "lines_per_second"   : 139734.79825551},
+  "elapsed_seconds"    : 0.0299010276794434,
+  "n_files"            : 52,
+  "n_lines"            : 4063,
+  "files_per_second"   : 1739.07066196756,
+  "lines_per_second"   : 135881.617299504},
 "JSX" :{
   "nFiles": 17,
   "blank": 168,
@@ -16,28 +16,33 @@
   "blank": 78,
   "comment": 30,
   "code": 651},
+"YAML" :{
+  "nFiles": 5,
+  "blank": 30,
+  "comment": 24,
+  "code": 158},
 "JavaScript" :{
   "nFiles": 5,
   "blank": 3,
   "comment": 0,
   "code": 110},
-"YAML" :{
-  "nFiles": 2,
-  "blank": 22,
-  "comment": 10,
-  "code": 84},
 "Ruby" :{
   "nFiles": 1,
   "blank": 5,
   "comment": 2,
   "code": 11},
+"Bourne Shell" :{
+  "nFiles": 1,
+  "blank": 2,
+  "comment": 4,
+  "code": 4},
 "Text" :{
   "nFiles": 1,
   "blank": 0,
   "comment": 0,
   "code": 1},
 "SUM": {
-  "blank": 276,
-  "comment": 42,
-  "code": 3639,
-  "nFiles": 48} }
+  "blank": 286,
+  "comment": 60,
+  "code": 3717,
+  "nFiles": 52} }

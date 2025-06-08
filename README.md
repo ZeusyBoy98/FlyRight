@@ -17,8 +17,8 @@ JSX          --> 2,782 lines
 Vue.js       --> 0 lines
 PHP          --> 0 lines
 C#           --> 0 lines
-Other        --> 96 lines
+Other        --> 174 lines
 
-[ TOTAL LINES OF CODE: 3,639 ]
+[ TOTAL LINES OF CODE: 3,717 ]
 ```
  <!-- LANGUAGES BREAKDOWN END -->
