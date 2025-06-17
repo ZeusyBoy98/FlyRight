@@ -9,6 +9,7 @@ import Animated, { LinearTransition } from "react-native-reanimated";
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { LinearGradient } from 'expo-linear-gradient';
 import filter from "lodash.filter";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 const colorScheme = Appearance.getColorScheme();
 let theme = colors[colorScheme];
@@ -83,18 +84,20 @@ export default function Checklists() {
             >
                 <SafeAreaView style={styles.content}>
                     <View style={{flexDirection: "row", gap: 10,}}>
-                        <TextInput 
-                        placeholder='Search' 
-                        autoCapitalize="none" 
-                        autoCorrect={false} 
-                        color={theme.text}
-                        placeholderTextColor="white"
-                        clearButtonMode='always' 
-                        style={styles.search}
-                        value={searchQuery}
-                        fontSize={24}
-                        onChangeText={(query) => handleSearch(query)}
-                        />
+                        <View style={styles.search}>
+                            <FontAwesome name="search" size={25} color="white" />
+                            <TextInput 
+                            placeholder="Search"
+                            autoCapitalize="none" 
+                            autoCorrect={false} 
+                            color={theme.text}
+                            placeholderTextColor="white"
+                            clearButtonMode='always' 
+                            value={searchQuery}
+                            fontSize={24}
+                            onChangeText={(query) => handleSearch(query)}
+                            />
+                        </View>
                         <Pressable 
                         onPress={() => {
                             const newId = checklists.length > 0 ? Math.max(...checklists.map(checklist => checklist.id)) + 1 : 1;
@@ -137,6 +140,8 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     search: {
+        flexDirection: "row",
+        gap: 15,
         paddingHorizontal: 20,
         paddingVertical: 10,
         borderColor: "white",
@@ -144,6 +149,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         width: "80%",
         marginLeft: 15,
+        alignItems: "center",
     },
     checklistItem: {
         width: "100%",

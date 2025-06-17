@@ -9,6 +9,7 @@ import Animated, { LinearTransition } from "react-native-reanimated";
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { LinearGradient } from 'expo-linear-gradient';
 import filter from "lodash.filter";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 const colorScheme = Appearance.getColorScheme();
 let theme = colors[colorScheme];
@@ -92,17 +93,19 @@ export default function LogBook() {
         >
             <SafeAreaView style={styles.content}>
                 <View style={{flexDirection: "row", gap: 10,}}>
-                    <TextInput 
-                    placeholder='Search' 
-                    autoCapitalize="none" 
-                    autoCorrect={false} 
-                    clearButtonMode='always' 
-                    style={styles.search}
-                    placeholderTextColor="white"
-                    value={searchQuery}
-                    fontSize={24}
-                    onChangeText={(query) => handleSearch(query)}
-                    />
+                    <View style={styles.search}>
+                        <FontAwesome name="search" size={25} color="white" />
+                        <TextInput 
+                        placeholder='Search' 
+                        autoCapitalize="none" 
+                        autoCorrect={false} 
+                        clearButtonMode='always' 
+                        placeholderTextColor="white"
+                        value={searchQuery}
+                        fontSize={24}
+                        onChangeText={(query) => handleSearch(query)}
+                        />
+                    </View>
                     <Pressable 
                     onPress={() => {
                         const newId = logs.length > 0 ? Math.max(...logs.map(log => log.id)) + 1 : 1;
@@ -145,6 +148,8 @@ const styles = StyleSheet.create({
         paddingTop: "10%",
     },
     search: {
+        flexDirection: "row",
+        gap: 15,
         paddingHorizontal: 20,
         paddingVertical: 10,
         borderColor: "white",
@@ -153,6 +158,7 @@ const styles = StyleSheet.create({
         width: "80%",
         marginLeft: 15,
         color: theme.text,
+        alignItems: "center",
     },
     logItem: {
         width: "100%",

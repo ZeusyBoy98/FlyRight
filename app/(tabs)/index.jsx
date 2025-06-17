@@ -42,6 +42,7 @@ export default function Index() {
               const myChecklist = storageChecklists[0];
               setChecklist(myChecklist || {});
           }
+          console.log(logs)
       } catch (e) {
           console.error(e);
       }
@@ -85,25 +86,25 @@ export default function Index() {
           <Text style={styles.heading}>Fly</Text>
           <Text style={styles.right}>Right</Text>
         </View>
-        <Pressable onPress={() => router.push(`../logs/${log?.id}`)}>
+        <Pressable onPress={() => {logs.length != 0 ? router.push(`../logs/${log?.id}`) : ""}}>
           <Text style={styles.itemText}>Latest Log:</Text>
           <View style={styles.log}>
-            <View style={{flexDirection: "row", gap: 10, borderBottomColor: "gray",}}>
+            {logs.length != 0 ? <View style={{flexDirection: "row", gap: 10, borderBottomColor: "gray",}}>
               <Text style={styles.logTitle}>{log?.title}</Text>
               <Text style={styles.logDate}>{log?.date}</Text>
-            </View>
+            </View> : ""}
             <View style={{flexDirection: "row", gap: 20,}}>
-              <Text style={styles.logPlane}>Aircraft: {log?.plane}</Text>
-              <Text style={styles.logPlane}>{log?.departure} - {log?.arrival}</Text>
+              <Text style={styles.logPlane}>{logs.length != 0 ? "Aircraft:" : "No Logs Yet"}{log?.plane}</Text>
+              {logs.length != 0 ? <Text style={styles.logPlane}>{log?.departure} - {log?.arrival}</Text> : ""}
             </View>
           </View>
         </Pressable>
-        <Pressable onPress={() => router.push(`../checklists/${checklist?.id}`)} style={{marginTop: 10}}>
+        <Pressable onPress={() => {checklists.length != 0 ? router.push(`../checklists/${checklist?.id}`) : ""}} style={{marginTop: 10}}>
           <Text style={styles.itemText}>Latest Checklist:</Text>
           <View style={styles.log}>
             <View style={{flexDirection: "row", gap: 10, borderBottomColor: "gray",}}>
-              <Text style={styles.logTitle}>{checklist?.plane}</Text>
-              <Text style={styles.logDate}>{checklist?.title}</Text>
+              <Text style={checklists.length != 0 ? styles.logTitle : styles.logPlane}>{checklists.length != 0 ? checklist?.plane : "No Checklists Yet"}</Text>
+              {checklists.length != 0 ? <Text style={styles.logDate}>{checklist?.title}</Text> : ""}
             </View>
           </View>
         </Pressable>

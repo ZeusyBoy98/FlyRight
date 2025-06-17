@@ -98,7 +98,7 @@ export default function Convert() {
                                     <Text style={styles.output}>{Math.round(parseInput(kilogramsItem) *  2.2046226218)}</Text>
                                 }
                                 <Pressable onPress={togglePK}>
-                                    <FontAwesome name={PK === 0 ? "arrow-right": "arrow-left"} size={30} color="white" />
+                                    <FontAwesome name={PK === 0 ? "arrow-right": "arrow-left"} size={30} color={theme.highlight} />
                                 </Pressable>
                                 {PK === 0 ? 
                                     <Text style={styles.output}>{Math.round(parseInput(poundsItem) * 0.45359237)}</Text> : 
@@ -127,7 +127,7 @@ export default function Convert() {
                                     <Text style={styles.output}>{Math.round(parseInput(metresItem) *  3.280839895)}</Text>
                                 }
                                 <Pressable onPress={toggleFM}>
-                                    <FontAwesome name={FM === 0 ? "arrow-right" : "arrow-left"} size={30} color="white" />
+                                    <FontAwesome name={FM === 0 ? "arrow-right" : "arrow-left"} size={30} color={theme.highlight} />
                                 </Pressable>
                                 {FM === 0 ? 
                                     <Text style={styles.output}>{Math.round(parseInput(feetItem) *  0.3048)}</Text> :
@@ -156,7 +156,7 @@ export default function Convert() {
                                     <Text style={styles.output}>{Math.round(parseInput(kmhItem) /  1.852)}</Text>
                                 }
                                 <Pressable onPress={toggleKK}>
-                                    <FontAwesome name={KK === 0 ? "arrow-right" : "arrow-left"} size={30} color="white" />
+                                    <FontAwesome name={KK === 0 ? "arrow-right" : "arrow-left"} size={30} color={theme.highlight} />
                                 </Pressable>
                                 {KK === 0 ?
                                     <Text style={styles.output}>{Math.round(parseInput(knots1Item) *  1.852)}</Text> :
@@ -185,7 +185,7 @@ export default function Convert() {
                                     <Text style={styles.output}>{Math.round(parseInput(mphItem) * 0.868976)}</Text>
                                 }
                                 <Pressable onPress={toggleKM}>
-                                    <FontAwesome name={KM === 0 ? "arrow-right" : "arrow-left"} size={30} color="white" />
+                                    <FontAwesome name={KM === 0 ? "arrow-right" : "arrow-left"} size={30} color={theme.highlight} />
                                 </Pressable>
                                 {KM === 0 ? 
                                     <Text style={styles.output}>{Math.round(parseInput(knots2Item) * 1.150779)}</Text> :
@@ -214,7 +214,7 @@ export default function Convert() {
                                     <Text style={styles.output}>{Math.round(parseInput(machItem) * 666.738661)}</Text>
                                 }
                                 <Pressable onPress={toggleKMa}>
-                                    <FontAwesome name={KMa === 0 ? "arrow-right" : "arrow-left"} size={30} color="white" />
+                                    <FontAwesome name={KMa === 0 ? "arrow-right" : "arrow-left"} size={30} color={theme.highlight} />
                                 </Pressable>
                                 {KMa === 0 ? 
                                     <Text style={styles.output}>{(parseInput(knots3Item) * 0.0015).toFixed(2)}</Text> :
@@ -256,6 +256,7 @@ const styles = StyleSheet.create({
         width: "100%"
     },
     same: {
+        flex: 1,
         flexDirection: "row",
         gap: 10,
         alignItems: "center",
@@ -276,6 +277,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         color: "white",
         backgroundColor: theme.check,
+        width: "30%",
     },
     output: {
         color: "white",
@@ -283,5 +285,6 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         padding: 15,
         backgroundColor: theme.check,
+        width: "30%",
     },
 })
