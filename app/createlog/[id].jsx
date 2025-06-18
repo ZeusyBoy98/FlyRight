@@ -242,6 +242,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 10,
         marginBottom: 10,
+        minWidth: "30%",
     },
     dateFormat: {
         color: theme.text,
@@ -255,6 +256,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 10,
         marginBottom: 10,
+        minWidth: "15%",
     },
     planeInput: {
         marginLeft: "5%"

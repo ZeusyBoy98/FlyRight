@@ -11,6 +11,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { useRouter } from "expo-router";
 import * as Haptics from 'expo-haptics';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const colorScheme = Appearance.getColorScheme();
 let theme = colors[colorScheme];
@@ -90,12 +91,33 @@ export default function CreateChecklist() {
         setChecklistColor(checklistColor);
     };
 
+    const moveUp = (index) => {
+        if (index > 0) {
+            const newItems = [...items];
+            const temp = newItems[index - 1];
+            newItems[index - 1] = newItems[index];
+            newItems[index] = temp;
+            setItems(newItems); 
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+        }
+    };
+
+    const moveDown = (index) => {
+        if (index < items.length - 1) {
+            const newItems = [...items];
+            const temp = newItems[index + 1];
+            newItems[index + 1] = newItems[index];
+            newItems[index] = temp;
+            setItems(newItems);
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+        }
+    };
+
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <KeyboardAvoidingView behavior="padding" style={styles.container}>
                 <Text style={styles.heading}>Create Checklist</Text>
                 
-                {/* Plane and Title Inputs */}
                 <View style={{ flexDirection: "row", gap: 30 }}>
                     <TextInput
                         style={styles.planeInput}
@@ -137,7 +159,6 @@ export default function CreateChecklist() {
                     </View>
                 </Modal>
 
-                {/* Checklist Items */}
                 <View style={styles.itemsContainer}>
                     <Text style={styles.subheading}>Checklist Items</Text>
                     <View style={styles.itemInputContainer}>
@@ -155,9 +176,15 @@ export default function CreateChecklist() {
                     <Animated.FlatList
                         data={items}
                         keyExtractor={(item) => item.id.toString()}
-                        renderItem={({ item }) => (
+                        renderItem={({ item, index }) => (
                             <View style={styles.item}>
                                 <Text style={styles.itemText}>{item.text}</Text>
+                                <Pressable onPress={() => moveUp(index)} >
+                                    <AntDesign name="up" color="white" size={24}/>
+                                </Pressable>
+                                <Pressable onPress={() => moveDown(index)} >
+                                    <AntDesign name="down" color="white" size={24}/>
+                                </Pressable>
                                 <Pressable onPress={() => removeItem(item.id)} style={styles.deleteButton}>
                                     <MaterialCommunityIcons name="trash-can" size={24} color="white" />
                                 </Pressable>
