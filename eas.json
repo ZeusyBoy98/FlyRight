@@ -13,15 +13,6 @@
     },
     "production": {
       "autoIncrement": true
-    },
-    "ios": {
-      "mods": {
-        "dangerous": {
-          "podfile": [
-            "use_modular_headers!"
-          ]
-        }
-      }
     }
   },
   "submit": {
