@@ -7,7 +7,6 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import Feather from '@expo/vector-icons/Feather';
 
-
 const colorScheme = Appearance.getColorScheme();
 let theme = colors[colorScheme];
 
