@@ -164,6 +164,7 @@ export default function EditChecklist() {
                             placeholderTextColor={theme.inPlaceholder}
                             value={newItem}
                             onChangeText={setNewItem}
+                            maxLength={25}
                         />
                         <Pressable onPress={addItem} style={styles.addItemButton}>
                             <MaterialCommunityIcons name="plus" size={24} color="white" />

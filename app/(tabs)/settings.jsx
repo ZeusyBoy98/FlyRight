@@ -34,12 +34,12 @@ export default function Settings() {
                     <Text style={styles.buttonText}>Report a Bug</Text>
                 </Pressable>
             </Link>
-            <Text style={{ color: "gray", marginTop: 30, marginBottom: 3 }}>Support the Developer</Text>
+            {/* <Text style={{ color: "gray", marginTop: 30, marginBottom: 3 }}>Support the Developer</Text>
             <Link href="https://buymeacoffee.com/zeusyboy" style={{ marginHorizontal: "auto" }} asChild>
                 <Pressable style={styles.buttonRound}>
                     <Text style={styles.buttonText}>Buy Me a Coffee</Text>
                 </Pressable>
-            </Link>
+            </Link>*/}
             <Text style={{ marginTop: 30 }}>
                 <Text style={{ color: "gray", fontFamily: theme.font }}>Made with ❤️ by </Text>
                 <Text style={{ color: "gray", fontFamily: theme.font, fontWeight: "bold" }}>ZeusyBoy</Text>
@@ -48,6 +48,7 @@ export default function Settings() {
             <Link href="https://github.com/ZeusyBoy98/FlyRight" style={{ marginHorizontal: "auto" }} asChild>
                 <Text style={{ color: "gray", fontFamily: theme.font }}>https://github.com/ZeusyBoy98/FlyRight</Text>
             </Link>
+            <Text style={{position: "absolute", bottom: "5%", alignItems: "center", color: "gray"}}>v1.2.0</Text>
         </View>
         </GestureRecognizer>
     );

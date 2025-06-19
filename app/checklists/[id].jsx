@@ -9,6 +9,7 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import GestureRecognizer from 'react-native-swipe-gestures';
 import checklistbg from "@/assets/images/checklistbg.jpg";
+import * as progress from "react-native-progress";
 
 const colorScheme = Appearance.getColorScheme();
 let theme = colors[colorScheme];
