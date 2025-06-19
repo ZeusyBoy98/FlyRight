@@ -42,7 +42,6 @@ export default function Index() {
               const myChecklist = storageChecklists[0];
               setChecklist(myChecklist || {});
           }
-          console.log(logs)
       } catch (e) {
           console.error(e);
       }
@@ -94,7 +93,7 @@ export default function Index() {
               <Text style={styles.logDate}>{log?.date}</Text>
             </View> : ""}
             <View style={{flexDirection: "row", gap: 20,}}>
-              <Text style={styles.logPlane}>{logs.length != 0 ? "Aircraft:" : "No Logs Yet"}{log?.plane}</Text>
+              <Text style={styles.logPlane}>{logs.length != 0 ? "Aircraft: " : "No Logs Yet"}{log?.plane}</Text>
               {logs.length != 0 ? <Text style={styles.logPlane}>{log?.departure} - {log?.arrival}</Text> : ""}
             </View>
           </View>

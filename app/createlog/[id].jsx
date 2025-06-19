@@ -161,7 +161,7 @@ export default function CreateLog() {
                         />                    
                     )}
                 </View>
-                <Text style={{color: "white", fontSize: 10, marginBottom: 10}}>Press the calendar to select a date.</Text>
+                <Text style={{color: theme.text, fontSize: 10, marginBottom: 10}}>Press the calendar to select a date.</Text>
                 <View style={{flexDirection: "row", gap: 20,}}>
                     <TextInput
                         style={styles.dateInput}

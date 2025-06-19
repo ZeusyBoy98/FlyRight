@@ -122,6 +122,10 @@ export default function LogBook() {
                     contentContainerStyle={{ flexGrow: 1,}}
                     itemLayoutAnimation={LinearTransition}
                 />
+                {logs.length == 0 ? <Text style={{color: "white"}}>No Logs Yet</Text> : ""}
+            <Pressable onPress={() => {router.push('/stats/')}} style={{position: "absolute", bottom: "5%", right: "5%",}}>
+                <FontAwesome name="pie-chart" color="white" size={50}/>
+            </Pressable>
             </SafeAreaView>
         </LinearGradient>
         </GestureRecognizer>

@@ -177,10 +177,10 @@ export default function EditChecklist() {
                                 <View style={styles.item}>
                                     <Text style={styles.itemText}>{item.text}</Text>
                                     <Pressable onPress={() => moveUp(index)} >
-                                        <AntDesign name="up" color="white" size={24}/>
+                                        <AntDesign name="up" color={theme.text} size={24}/>
                                     </Pressable>
                                     <Pressable onPress={() => moveDown(index)} >
-                                        <AntDesign name="down" color="white" size={24}/>
+                                        <AntDesign name="down" color={theme.text} size={24}/>
                                     </Pressable>
                                     <Pressable onPress={() => removeItem(item.id)} style={styles.deleteButton}>
                                         <MaterialCommunityIcons name="trash-can" size={24} color="white" />

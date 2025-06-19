@@ -18,6 +18,7 @@ export default function RootLayout() {
         <Stack.Screen name="createchecklist/[id]" options={{headerShown: false, gestureEnabled: false}}/>
         <Stack.Screen name="editlog/[id]" options={{headerShown: false, gestureEnabled: false}}/>
         <Stack.Screen name="editchecklist/[id]" options={{headerShown: false, gestureEnabled: false}}/>
+        <Stack.Screen name="stats/index" options={{headerShown: false, gestureEnabled: false}}/>
       </Stack>
     </SafeAreaProvider>
   );

@@ -11,6 +11,8 @@ const colorScheme = Appearance.getColorScheme();
 let theme = colors[colorScheme];
 
 export default function TabLayout() {
+    
+
     return (
       <Tabs
         screenOptions={{

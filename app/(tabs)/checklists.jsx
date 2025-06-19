@@ -114,6 +114,7 @@ export default function Checklists() {
                         contentContainerStyle={{ flexGrow: 1 }}
                         itemLayoutAnimation={LinearTransition}
                     />
+                {checklists.length == 0 ? <Text style={{color: "white"}}>No Checklists Yet</Text> : ""}
                 </SafeAreaView>
             </LinearGradient>
         </GestureRecognizer>
