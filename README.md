@@ -13,12 +13,12 @@ The best flightsim companion app.
 
 JavaScript   --> 110 lines
 TypeScript   --> 651 lines
-JSX          --> 2,803 lines
+JSX          --> 2,991 lines
 Vue.js       --> 0 lines
 PHP          --> 0 lines
 C#           --> 0 lines
 Other        --> 174 lines
 
-[ TOTAL LINES OF CODE: 3,738 ]
+[ TOTAL LINES OF CODE: 3,926 ]
 ```
  <!-- LANGUAGES BREAKDOWN END -->
