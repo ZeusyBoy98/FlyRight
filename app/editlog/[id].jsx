@@ -134,6 +134,7 @@ export default function EditLog() {
                 onChangeText={(text) => setLog(prev => ({ ...prev, plane: text}))}
                 />
             </View>
+            <Text style={{ color: theme.text, fontFamily: theme.font, fontSize: 18 }}>Currently Selected Date: {formattedDate}</Text>
             <View style={{flexDirection: "row", marginBottom: 10}}>
                 <Pressable onPress={showDatepicker}>
                     <Feather name="calendar" size={30} color={theme.text} />
@@ -148,6 +149,7 @@ export default function EditLog() {
                     />                    
                 )}
             </View>
+            <Text style={{color: theme.text, fontSize: 10, marginBottom: 10}}>Press the calendar to select a date.</Text>
             <View style={{flexDirection: "row", gap: 20, justifyContent: "center", alignItems: "center"}}>
                 <Text style={styles.text}>Hours:</Text>
                 <TextInput
@@ -225,6 +227,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 10,
         marginBottom: 10,
+        minWidth: "30%",
     },
     dateFormat: {
         color: theme.text,
@@ -238,6 +241,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 10,
         marginBottom: 10,
+        minWidth: "15%",
     },
     planeInput: {
         marginLeft: "5%"

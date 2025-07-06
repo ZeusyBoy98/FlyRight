@@ -37,6 +37,15 @@ export default function TabLayout() {
                 ),
             }} 
         ></Tabs.Screen>
+        {/*<Tabs.Screen
+            name="flashcards"
+            options={{
+                tabBarShowLabel: false,
+                tabBarIcon: ({ focused }) => (
+                    <MaterialCommunityIcons name="card-text" size={30} color={focused ? theme.highlight : theme.unHighlight} />
+                ),
+            }}
+        ></Tabs.Screen>*/}
         <Tabs.Screen
           name="index"
           options={{

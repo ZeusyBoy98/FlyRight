@@ -1,5 +1,5 @@
 import { useLocalSearchParams } from "expo-router";
-import { Text, View, StyleSheet, Pressable, ScrollView, Appearance, ImageBackground } from "react-native";
+import { Text, View, StyleSheet, Pressable, ScrollView, Appearance, ImageBackground, Dimensions } from "react-native";
 import { useState, useEffect } from 'react';
 import { colors } from "@/data/colors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -8,7 +8,12 @@ import * as Haptics from 'expo-haptics';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import GestureRecognizer from 'react-native-swipe-gestures';
+// import { supabase } from "@/lib/supabase";
 import checklistbg from "@/assets/images/checklistbg.jpg";
+import ConfettiCannon from 'react-native-confetti-cannon';
+import * as Progress from 'react-native-progress';
+
+const screenWidth = Dimensions.get('window').width;
 
 const colorScheme = Appearance.getColorScheme();
 let theme = colors[colorScheme];
@@ -16,16 +21,31 @@ let theme = colors[colorScheme];
 export default function ViewChecklist() {
     const { id } = useLocalSearchParams();
     const [checklist, setChecklist] = useState({});
+    const [checkboxStates, setCheckboxStates] = useState({});
+    const [confettiVisible, setConfettiVisible] = useState(false);
     const router = useRouter();
+    const progress = checklist?.items ? Object.values(checkboxStates).filter(isChecked => isChecked).length / checklist.items.length : 0;
+
+    useEffect(() => {
+        if (progress === 1 && !confettiVisible) {
+            setConfettiVisible(true);
+            setTimeout(() => setConfettiVisible(false), 5000); // Hide after 5s
+        }
+    }, [progress]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const jsonValue = await AsyncStorage.getItem("Checklists");
                 const storageChecklists = jsonValue ? JSON.parse(jsonValue) : [];
-                if (storageChecklists.length) {
-                    const myChecklist = storageChecklists.find(checklist => checklist.id.toString() === id);
-                    setChecklist(myChecklist || {});
+                const myChecklist = storageChecklists.find(checklist => checklist.id.toString() === id);
+                if (myChecklist) {
+                    setChecklist(myChecklist);
+
+                    const storedStates = await AsyncStorage.getItem(`checklistStates_${id}`);
+                    if (storedStates) {
+                        setCheckboxStates(JSON.parse(storedStates));
+                    }
                 }
             } catch (e) {
                 console.error(e);
@@ -34,6 +54,55 @@ export default function ViewChecklist() {
 
         fetchData();
     }, [id]);
+
+    const shareChecklist = async () => {
+        try {
+            const { title, items, plane, checklistColor } = checklist;
+            const { data, error } = await supabase.from("shared_checklists").insert([
+                {
+                    title,
+                    plane,
+                    items,
+                    checklistColor,
+                }
+            ]);
+    
+            if (error) {
+                console.error("Error sharing:", error);
+                return;
+            }
+    
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+            alert("Checklist shared to public!");
+        } catch (e) {
+            console.error(e);
+            alert("Failed to share checklist.");
+        }
+    };
+
+    const handleCheckboxPress = async (itemId, isChecked) => {
+        const newStates = { ...checkboxStates, [itemId]: isChecked };
+        setCheckboxStates(newStates);
+
+        try {
+            await AsyncStorage.setItem(`checklistStates_${id}`, JSON.stringify(newStates));
+        } catch (e) {
+            console.error(e);
+        }
+
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    };
+
+    const clearCheckboxes = async () => {
+        const clearedStates = {};
+        setCheckboxStates(clearedStates);
+
+        try {
+            await AsyncStorage.setItem(`checklistStates_${id}`, JSON.stringify(clearedStates));
+        } catch (e) {
+            console.error(e);
+        }
+    };
 
     const removeChecklist = async () => {
         try {
@@ -63,23 +132,26 @@ export default function ViewChecklist() {
         >
             <ImageBackground source={checklistbg} resizeMode="cover" style={styles.container}>
                 <View style={styles.headingContainer}>
-                    <Text style={styles.planeText}>{checklist?.plane}</Text>
-                    <Text style={styles.planeText}>{checklist?.title}</Text>
+                    <View style={styles.heading}>
+                        <Text style={styles.planeText}>{checklist?.plane}</Text>
+                        <Text style={styles.planeText}>{checklist?.title}</Text>
+                    </View>
+                    <Progress.Bar progress={progress} width={screenWidth * 0.8} height={10} color={checklist.checklistColor}/>
                 </View>
-
                 <ScrollView style={styles.scrollView} contentContainerStyle={{ alignItems: 'center' }}>
                     {checklist?.items && checklist.items.length > 0 ? (
                         checklist.items.map(item => (
                             <View key={item.id} style={styles.itemContainer}>
                                 <BouncyCheckbox 
-                                size={25}
-                                fillColor={checklist?.checklistColor}
-                                unFillColor="white"
-                                text={item.text}
-                                textStyle={styles.itemText}
-                                iconStyle={{borderColor:theme.highlight}}
-                                innerIconStyle={{borderWidth: 2}}
-                                onPress={() => {Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft)}} 
+                                    size={25}
+                                    fillColor={checklist?.checklistColor}
+                                    unFillColor="white"
+                                    text={item.text}
+                                    textStyle={styles.itemText}
+                                    iconStyle={{borderColor:theme.highlight}}
+                                    innerIconStyle={{borderWidth: 2}}
+                                    isChecked={checkboxStates[item.id] || false}
+                                    onPress={(isChecked) => handleCheckboxPress(item.id, isChecked)} 
                                 />
                             </View>
                         ))
@@ -89,6 +161,9 @@ export default function ViewChecklist() {
                 </ScrollView>
 
                 <View style={{flexDirection: "row", gap: 30}}>
+                    {/* <Pressable onPress={shareChecklist}>
+                        <MaterialCommunityIcons name="share" size={40} color="white"/>
+                    </Pressable> */}
                     <Pressable onPress={() => router.push("/(tabs)/checklists")} style={styles.exitButton}>
                         <Text style={styles.exitButtonText}>Exit</Text>
                     </Pressable>
@@ -96,10 +171,22 @@ export default function ViewChecklist() {
                         <MaterialCommunityIcons name="pencil" size={43} color="white" />
                     </Pressable>
                 </View>
+                <Pressable onPress={clearCheckboxes} style={styles.clearButton}>
+                    <Text style={styles.clearButtonText}>Clear Checks</Text>
+                </Pressable>
                 <Pressable onPress={removeChecklist} style={styles.deleteChecklist}>
                     <Text style={styles.deleteChecklistText}>Delete Checklist</Text>
                 </Pressable>
             </ImageBackground>
+            {confettiVisible && (
+                <ConfettiCannon
+                    count={100}
+                    origin={{ x: 200, y: 0 }}
+                    fadeOut={true}
+                    explosionSpeed={300}
+                    fallSpeed={3000}
+                />
+            )}
         </GestureRecognizer>
     );
 }
@@ -117,15 +204,20 @@ const styles = StyleSheet.create({
         width: "100%"
     },
     headingContainer: {
-        flexDirection: "row", 
-        justifyContent: "center", 
+        justifyContent: "center",
+        alignItems: "center", 
         backgroundColor: "rgba(0,0,0,0.5)",
         width: "100%", 
-        gap: 30, 
         borderBottomColor: "gray", 
         borderBottomWidth: 1,
         marginBottom: 10,
         paddingTop: "7%",
+        paddingBottom: 5,
+    },
+    heading: {
+        flexDirection: "row", 
+        gap: 30,
+        justifyContent: "center", 
     },
     planeText: {
         color: theme.highlight,
@@ -152,15 +244,22 @@ const styles = StyleSheet.create({
         fontSize: 30,
         color: "white",
     },
-    deleteButton: {
-        backgroundColor: "red",
-        padding: 5,
-        borderRadius: 5,
-    },
     noItemsText: {
         color: theme.text,
         fontSize: 18,
         marginTop: 20,
+    },
+    clearButton: {
+        backgroundColor: "gray",
+        borderRadius: 5,
+        padding: 10,
+        paddingHorizontal: 30,
+        marginBottom: 20,
+    },
+    clearButtonText: {
+        fontFamily: theme.font,
+        fontSize: 18,
+        color: "white",
     },
     deleteChecklist: {
         backgroundColor: "red",

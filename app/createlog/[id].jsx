@@ -7,7 +7,6 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import Feather from '@expo/vector-icons/Feather';
 
-
 const colorScheme = Appearance.getColorScheme();
 let theme = colors[colorScheme];
 
@@ -38,6 +37,12 @@ export default function CreateLog() {
             }
         };
         loadData();
+
+        const today = new Date();
+        const day = today.getDate().toString().padStart(2, "0");
+        const month = (today.getMonth() + 1).toString().padStart(2, "0");
+        const year = today.getFullYear();
+        setFormattedDate(`${day}/${month}/${year}`);
     }, []);
 
     const addLog = async () => {
@@ -140,7 +145,8 @@ export default function CreateLog() {
                     onChangeText={setPlane}
                     />
                 </View>
-                <View style={{flexDirection: "row", marginBottom: 10}}>
+                <Text style={{ color: theme.text, fontFamily: theme.font, fontSize: 18 }}>Currently Selected Date: {formattedDate}</Text>
+                <View style={{flexDirection: "row", marginBottom: 5, marginTop: 5}}>
                     <Pressable onPress={showDatepicker}>
                         <Feather name="calendar" size={30} color={theme.text} />
                     </Pressable>
@@ -154,6 +160,7 @@ export default function CreateLog() {
                         />                    
                     )}
                 </View>
+                <Text style={{color: theme.text, fontSize: 10, marginBottom: 10}}>Press the calendar to select a date.</Text>
                 <View style={{flexDirection: "row", gap: 20,}}>
                     <TextInput
                         style={styles.dateInput}
@@ -234,6 +241,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 10,
         marginBottom: 10,
+        minWidth: "30%",
     },
     dateFormat: {
         color: theme.text,
@@ -247,6 +255,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 10,
         marginBottom: 10,
+        minWidth: "15%",
     },
     planeInput: {
         marginLeft: "5%"

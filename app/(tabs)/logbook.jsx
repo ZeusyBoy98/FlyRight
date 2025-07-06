@@ -9,6 +9,7 @@ import Animated, { LinearTransition } from "react-native-reanimated";
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { LinearGradient } from 'expo-linear-gradient';
 import filter from "lodash.filter";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 const colorScheme = Appearance.getColorScheme();
 let theme = colors[colorScheme];
@@ -79,30 +80,33 @@ export default function LogBook() {
 
     return (
         <GestureRecognizer
+            // onSwipeLeft={() => {router.push("/(tabs)/flashcards")}}
             onSwipeLeft={() => {router.push("/(tabs)/")}}
             onSwipeRight={() => {router.push("/(tabs)/checklists")}}
             config={config}
             style={styles.swipe}
         >
         <LinearGradient
-            colors={theme.mainGrad}
+            colors={theme.secGrad}
             style={styles.background}
             start={{ x: 1, y: 0 }}
             end={{ x: 0, y: 1 }}
         >
             <SafeAreaView style={styles.content}>
                 <View style={{flexDirection: "row", gap: 10,}}>
-                    <TextInput 
-                    placeholder='Search' 
-                    autoCapitalize="none" 
-                    autoCorrect={false} 
-                    clearButtonMode='always' 
-                    style={styles.search}
-                    placeholderTextColor="white"
-                    value={searchQuery}
-                    fontSize={24}
-                    onChangeText={(query) => handleSearch(query)}
-                    />
+                    <View style={styles.search}>
+                        <FontAwesome name="search" size={25} color="white" />
+                        <TextInput 
+                        placeholder='Search' 
+                        autoCapitalize="none" 
+                        autoCorrect={false} 
+                        clearButtonMode='always' 
+                        placeholderTextColor="white"
+                        value={searchQuery}
+                        fontSize={24}
+                        onChangeText={(query) => handleSearch(query)}
+                        />
+                    </View>
                     <Pressable 
                     onPress={() => {
                         const newId = logs.length > 0 ? Math.max(...logs.map(log => log.id)) + 1 : 1;
@@ -119,6 +123,10 @@ export default function LogBook() {
                     contentContainerStyle={{ flexGrow: 1,}}
                     itemLayoutAnimation={LinearTransition}
                 />
+                {logs.length == 0 ? <Text style={{color: "white"}}>No Logs Yet</Text> : ""}
+            <Pressable onPress={() => {router.push('/stats/')}} style={{position: "absolute", bottom: "5%", right: "5%",}}>
+                <FontAwesome name="pie-chart" color="white" size={50}/>
+            </Pressable>
             </SafeAreaView>
         </LinearGradient>
         </GestureRecognizer>
@@ -145,6 +153,8 @@ const styles = StyleSheet.create({
         paddingTop: "10%",
     },
     search: {
+        flexDirection: "row",
+        gap: 15,
         paddingHorizontal: 20,
         paddingVertical: 10,
         borderColor: "white",
@@ -153,6 +163,7 @@ const styles = StyleSheet.create({
         width: "80%",
         marginLeft: 15,
         color: theme.text,
+        alignItems: "center",
     },
     logItem: {
         width: "100%",

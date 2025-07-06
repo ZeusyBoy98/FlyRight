@@ -41,3 +41,5 @@ app-example
 certs/
 ios/
 android/
+server.js
+lib/

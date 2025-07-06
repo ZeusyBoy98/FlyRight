@@ -49,16 +49,15 @@ export default function Index() {
 
   fetchLogData();
   fetchChecklistData();
-}, []);
+  }, []);
 
   const checkFirstLaunch = async () => {
     try {
       const isFirstLaunch = await AsyncStorage.getItem('isFirstLaunch');
-      
+
       if (isFirstLaunch === null) {
-        await AsyncStorage.setItem('planebg', 'true');
-        await AsyncStorage.setItem('homebg', 'true');
         await AsyncStorage.setItem('isFirstLaunch', 'false');
+        router.push("/onboarding");
       }
     } catch (error) {
       console.error(error);
@@ -75,6 +74,7 @@ export default function Index() {
   return (
     <GestureRecognizer
       onSwipeLeft={() => {router.push("/(tabs)/convert")}}
+      // onSwipeRight={() => {router.push("/(tabs)/flashcards")}}
       onSwipeRight={() => {router.push("/(tabs)/logbook")}}
       config={config}
       style={styles.container}
@@ -85,25 +85,25 @@ export default function Index() {
           <Text style={styles.heading}>Fly</Text>
           <Text style={styles.right}>Right</Text>
         </View>
-        <Pressable onPress={() => router.push(`../logs/${log?.id}`)}>
+        <Pressable onPress={() => {logs.length != 0 ? router.push(`../logs/${log?.id}`) : ""}}>
           <Text style={styles.itemText}>Latest Log:</Text>
           <View style={styles.log}>
-            <View style={{flexDirection: "row", gap: 10, borderBottomColor: "gray",}}>
+            {logs.length != 0 ? <View style={{flexDirection: "row", gap: 10, borderBottomColor: "gray",}}>
               <Text style={styles.logTitle}>{log?.title}</Text>
               <Text style={styles.logDate}>{log?.date}</Text>
-            </View>
+            </View> : ""}
             <View style={{flexDirection: "row", gap: 20,}}>
               <Text style={styles.logPlane}>Aircraft: {log?.plane}</Text>
-              <Text style={styles.logPlane}>{log?.departure} - {log?.arrival}</Text>
+              {logs.length != 0 ? <Text style={styles.logPlane}>{log?.departure} - {log?.arrival}</Text> : ""}
             </View>
           </View>
         </Pressable>
-        <Pressable onPress={() => router.push(`../checklists/${checklist?.id}`)} style={{marginTop: 10}}>
+        <Pressable onPress={() => {checklists.length != 0 ? router.push(`../checklists/${checklist?.id}`) : ""}} style={{marginTop: 10}}>
           <Text style={styles.itemText}>Latest Checklist:</Text>
           <View style={styles.log}>
             <View style={{flexDirection: "row", gap: 10, borderBottomColor: "gray",}}>
               <Text style={styles.logTitle}>{checklist?.plane}</Text>
-              <Text style={styles.logDate}>{checklist?.title}</Text>
+              {checklists.length != 0 ? <Text style={styles.logDate}>{checklist?.title}</Text> : ""}
             </View>
           </View>
         </Pressable>
