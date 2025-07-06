@@ -145,7 +145,7 @@ export default function Settings() {
             {/*<Pressable onPress={clearStorage}>
                 <Text>Clear</Text>
             </Pressable>*/}
-            <Text style={{position: "absolute", bottom: "5%", alignItems: "center", color: "gray"}}>v1.2.0</Text>
+            <Text style={{position: "absolute", bottom: "5%", alignItems: "center", color: "gray"}}>insert update here</Text>
         </View>
         </GestureRecognizer>
     );
