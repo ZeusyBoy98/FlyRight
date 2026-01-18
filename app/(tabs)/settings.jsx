@@ -8,6 +8,9 @@ import { useEffect, useState } from "react";
 // import { supabase } from "@/lib/supabase";
 import { useRouter } from "expo-router";
 import GestureRecognizer from 'react-native-swipe-gestures';
+import * as Sharing from 'expo-sharing';
+import * as DocumentPicker from 'expo-document-picker';
+import * as FileSystem from 'expo-file-system';
 
 const colorScheme = Appearance.getColorScheme();
 let theme = colors[colorScheme];
@@ -30,6 +33,56 @@ export default function Settings() {
     const config = {
         velocityThreshold: 0.3,
         directionalOffsetThreshold: 80
+    };
+
+    const exportLogs = async () => {
+        try {
+            const jsonValue = await AsyncStorage.getItem("Logs");
+            const logs = jsonValue ? JSON.parse(jsonValue) : [];
+            if (logs.length > 0) {
+                const logsString = JSON.stringify(logs, null, 2);
+                const fileUri = FileSystem.documentDirectory + 'logs.json';
+                await FileSystem.writeAsStringAsync(fileUri, logsString);
+                await Sharing.shareAsync(fileUri, { mimeType: 'application/json' });
+            } else {
+                Alert.alert("No Logs", "There are no logs to export.");
+            }
+        } catch (error) {
+            console.error("Error exporting logs:", error);
+            Alert.alert("Export Failed", "An error occurred while exporting logs.");
+        }
+    };
+
+    const importLogs = async () => {
+        try {
+            const result = await DocumentPicker.getDocumentAsync({
+                type: 'application/json',
+                copyToCacheDirectory: true,
+            });
+
+            if (result.canceled) return;
+
+            const uri = result.assets[0].uri;
+            const contents = await FileSystem.readAsStringAsync(uri);
+            const importedLogs = JSON.parse(contents);
+
+            const existingJson = await AsyncStorage.getItem("Logs");
+            let existingLogs = existingJson ? JSON.parse(existingJson) : [];
+
+            const maxId = existingLogs.length > 0 ? Math.max(...existingLogs.map(log => log.id)) : 0;
+            const adjustedImportedLogs = importedLogs.map((log, index) => ({
+                ...log,
+                id: maxId + index + 1,
+            }));
+            const mergedLogs = [...existingLogs, ...adjustedImportedLogs];
+
+            await AsyncStorage.setItem("Logs", JSON.stringify(mergedLogs));
+
+            Alert.alert("Import Successful", "Close and reopen the app to see imported logs.");
+        } catch (error) {
+            console.error("Error importing logs:", error);
+            Alert.alert("Import Failed", "An error occurred while importing logs. Ensure the file is a valid JSON.");
+        }
     };
 
     return (
@@ -70,6 +123,12 @@ export default function Settings() {
                     <Text style={styles.buttonText}>Support</Text>
                 </Pressable>
             </Link>
+            <Pressable onPress={() => exportLogs()} style={styles.buttonTop}>
+                <Text style={styles.buttonText}>Export Logs</Text>
+            </Pressable>
+            <Pressable onPress={() => importLogs()} style={[styles.buttonBottom, {marginBottom: 30}]}>
+                <Text style={styles.buttonText}>Import Logs</Text>
+            </Pressable>
             {/* {isLoggedIn && (
             <>
                 <Pressable
@@ -145,7 +204,7 @@ export default function Settings() {
             {/*<Pressable onPress={clearStorage}>
                 <Text>Clear</Text>
             </Pressable>*/}
-            <Text style={{position: "absolute", bottom: "5%", alignItems: "center", color: "gray"}}>insert update here</Text>
+            <Text style={{position: "absolute", bottom: "5%", alignItems: "center", color: "gray"}}>1.3.0</Text>
         </View>
         </GestureRecognizer>
     );
