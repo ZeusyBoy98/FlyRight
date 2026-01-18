@@ -85,6 +85,56 @@ export default function Settings() {
         }
     };
 
+    const exportChecklists = async () => {
+        try {
+            const jsonValue = await AsyncStorage.getItem("Checklists");
+            const checklists = jsonValue ? JSON.parse(jsonValue) : [];
+            if (checklists.length > 0) {
+                const checklistsString = JSON.stringify(checklists, null, 2);
+                const fileUri = FileSystem.documentDirectory + 'checklists.json';
+                await FileSystem.writeAsStringAsync(fileUri, checklistsString);
+                await Sharing.shareAsync(fileUri, { mimeType: 'application/json' });
+            } else {
+                Alert.alert("No Checklists", "There are no checklists to export.");
+            }
+        } catch (error) {
+            console.error("Error exporting checklists:", error);
+            Alert.alert("Export Failed", "An error occurred while exporting checklists.");
+        }
+    };
+
+    const importChecklists = async () => {
+        try {
+            const result = await DocumentPicker.getDocumentAsync({
+                type: 'application/json',
+                copyToCacheDirectory: true,
+            });
+
+            if (result.canceled) return;
+
+            const uri = result.assets[0].uri;
+            const contents = await FileSystem.readAsStringAsync(uri);
+            const importedChecklists = JSON.parse(contents);
+
+            const existingJson = await AsyncStorage.getItem("Checklists");
+            let existingChecklists = existingJson ? JSON.parse(existingJson) : [];
+
+            const maxId = existingChecklists.length > 0 ? Math.max(...existingChecklists.map(checklist => checklist.id)) : 0;
+            const adjustedImportedChecklists = importedChecklists.map((checklist, index) => ({
+                ...checklist,
+                id: maxId + index + 1,
+            }));
+            const mergedChecklists = [...existingChecklists, ...adjustedImportedChecklists];
+
+            await AsyncStorage.setItem("Checklists", JSON.stringify(mergedChecklists));
+
+            Alert.alert("Import Successful", "Close and reopen the app to see imported checklists.");
+        } catch (error) {
+            console.error("Error importing checklists:", error);
+            Alert.alert("Import Failed", "An error occurred while importing checklists. Ensure the file is a valid JSON.");
+        }
+    };
+
     return (
         <GestureRecognizer
             onSwipeRight={() => {router.push("/(tabs)/convert")}}
@@ -128,6 +178,12 @@ export default function Settings() {
             </Pressable>
             <Pressable onPress={() => importLogs()} style={[styles.buttonBottom, {marginBottom: 30}]}>
                 <Text style={styles.buttonText}>Import Logs</Text>
+            </Pressable>
+            <Pressable onPress={() => exportChecklists()} style={styles.buttonTop}>
+                <Text style={styles.buttonText}>Export Checklists</Text>
+            </Pressable>
+            <Pressable onPress={() => importChecklists()} style={[styles.buttonBottom, {marginBottom: 30}]}>
+                <Text style={styles.buttonText}>Import Checklists</Text>
             </Pressable>
             {/* {isLoggedIn && (
             <>
