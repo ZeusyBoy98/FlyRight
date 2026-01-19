@@ -84,7 +84,7 @@ export default function Convert() {
                     <KeyboardAvoidingView behavior="padding" style={styles.container}>
                         <Text style={styles.heading}>Convert</Text>
                         <ScrollView style={{flex: 1, width: "100%"}} contentContainerStyle={{alignItems: "center"}}>
-                            <Text style={styles.label}>{PK === 0 ? "Pounds - Kilograms" : "Kilograms - Pounds"}</Text>
+                            <Text style={styles.label}>{PK === 0 ? "Pounds to Kilograms" : "Kilograms to Pounds"}</Text>
                             <View style={styles.same}>
                                 {PK === 0 ? 
                                     <TextInput
@@ -113,7 +113,7 @@ export default function Convert() {
                                 }
                             </View>
 
-                            <Text style={styles.label}>{FM === 0 ? "Feet - Metres" : "Metres - Feet"}</Text>
+                            <Text style={styles.label}>{FM === 0 ? "Feet to Metres" : "Metres to Feet"}</Text>
                             <View style={styles.same}>
                                 {FM === 0 ? 
                                     <TextInput
@@ -142,7 +142,7 @@ export default function Convert() {
                                 }
                             </View>
 
-                            <Text style={styles.label}>{KK ===0 ? "Knots - km/h" : "km/h - Knots"}</Text>
+                            <Text style={styles.label}>{KK ===0 ? "Knots to km/h" : "km/h to Knots"}</Text>
                             <View style={styles.same}>
                                 {KK === 0 ? 
                                     <TextInput
@@ -171,7 +171,7 @@ export default function Convert() {
                                 }
                             </View>
 
-                            <Text style={styles.label}>{KM === 0 ? "Knots - mp/h" : "mp/h - Knots"}</Text>
+                            <Text style={styles.label}>{KM === 0 ? "Knots to mp/h" : "mp/h to Knots"}</Text>
                             <View style={styles.same}>
                                 {KM === 0 ?
                                     <TextInput
@@ -200,7 +200,7 @@ export default function Convert() {
                                 }
                             </View>
 
-                            <Text style={styles.label}>{KMa === 0 ? "Knots - Mach" : "Mach - Knots"}</Text>
+                            <Text style={styles.label}>{KMa === 0 ? "Knots to Mach" : "Mach to Knots"}</Text>
                             <View style={styles.same}>
                                 {KMa === 0 ?
                                     <TextInput

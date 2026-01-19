@@ -2,7 +2,7 @@
   "expo": {
     "name": "FlyRight",
     "slug": "flyright",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "orientation": "portrait",
     "icon": "./assets/images/FlyRight.png",
     "scheme": "myapp",
@@ -32,9 +32,6 @@
       [
         "expo-splash-screen",
         {
-          // "resizeMode": "cover",
-          // "imageWidth": 200,
-          // "image": "./assets/images/FlyRight.png",
           "backgroundColor": "#000000"
         }
       ],
