@@ -8,6 +8,8 @@ import * as Haptics from 'expo-haptics';
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { LinearGradient } from 'expo-linear-gradient';
+import * as Sharing from 'expo-sharing';
+import * as FileSystem from 'expo-file-system';
 
 const colorScheme = Appearance.getColorScheme();
 let theme = colors[colorScheme];
@@ -61,6 +63,25 @@ export default function ViewLog() {
         router.push(`/editlog/${id}`)
     };
 
+    const exportLog = async () => {
+        try {
+            const jsonValue = await AsyncStorage.getItem("Logs");
+            const logs = jsonValue ? JSON.parse(jsonValue) : [];
+            const myLog = logs.find(log => log.id.toString() === id);
+            if (myLog) {
+                const logsString = JSON.stringify(myLog, null, 2);
+                const fileUri = FileSystem.documentDirectory + `log-${myLog.title}.json`;
+                await FileSystem.writeAsStringAsync(fileUri, logsString);
+                await Sharing.shareAsync(fileUri, { mimeType: 'application/json' });
+            } else {
+                Alert.alert("No Log", "There is no log to export.");
+            }
+        } catch (error) {
+            console.error("Error exporting log:", error);
+            Alert.alert("Export Failed", "An error occurred while exporting log.");
+        }
+    };
+
     const config = {
         velocityThreshold: 0.3,
         directionalOffsetThreshold: 80
@@ -110,6 +131,9 @@ export default function ViewLog() {
                         </Pressable>
                         <Pressable onPress={() => router.push('/logbook')} style={styles.exitButton}>
                             <Text style={styles.exitButtonText}>Exit</Text>
+                        </Pressable>
+                        <Pressable onPress={() => exportLog()}>
+                            <MaterialCommunityIcons name="share" size={40} color="white"/>
                         </Pressable>
                         <Pressable onPress={handlePress}>
                             <MaterialCommunityIcons name="pencil" size={43} color="white" />

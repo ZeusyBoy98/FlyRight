@@ -64,7 +64,11 @@ export default function Settings() {
 
             const uri = result.assets[0].uri;
             const contents = await FileSystem.readAsStringAsync(uri);
-            const importedLogs = JSON.parse(contents);
+            let importedLogs = JSON.parse(contents);
+
+            if (!Array.isArray(importedLogs)) {
+                importedLogs = [importedLogs];
+            }
 
             const existingJson = await AsyncStorage.getItem("Logs");
             let existingLogs = existingJson ? JSON.parse(existingJson) : [];
@@ -114,7 +118,11 @@ export default function Settings() {
 
             const uri = result.assets[0].uri;
             const contents = await FileSystem.readAsStringAsync(uri);
-            const importedChecklists = JSON.parse(contents);
+            let importedChecklists = JSON.parse(contents);
+
+            if (!Array.isArray(importedChecklists)) {
+                importedChecklists = [importedChecklists];
+            }
 
             const existingJson = await AsyncStorage.getItem("Checklists");
             let existingChecklists = existingJson ? JSON.parse(existingJson) : [];

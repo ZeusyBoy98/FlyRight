@@ -12,6 +12,8 @@ import GestureRecognizer from 'react-native-swipe-gestures';
 import checklistbg from "@/assets/images/checklistbg.jpg";
 import ConfettiCannon from 'react-native-confetti-cannon';
 import * as Progress from 'react-native-progress';
+import * as Sharing from 'expo-sharing';
+import * as FileSystem from 'expo-file-system';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -118,6 +120,25 @@ export default function ViewChecklist() {
         }
     };
 
+    const exportChecklist = async () => {
+        try {
+            const jsonValue = await AsyncStorage.getItem("Checklists");
+            const checklists = jsonValue ? JSON.parse(jsonValue) : [];
+            const myChecklist = checklists.find(checklist => checklist.id.toString() === id);
+            if (myChecklist) {
+                const checklistsString = JSON.stringify(myChecklist, null, 2);
+                const fileUri = FileSystem.documentDirectory + `checklist-${myChecklist.title}.json`;
+                await FileSystem.writeAsStringAsync(fileUri, checklistsString);
+                await Sharing.shareAsync(fileUri, { mimeType: 'application/json' });
+            } else {
+                Alert.alert("No Checklist", "There is no checklist to export.");
+            }
+        } catch (error) {
+            console.error("Error exporting checklist:", error);
+            Alert.alert("Export Failed", "An error occurred while exporting checklist.");
+        }
+    };
+
     const config = {
         velocityThreshold: 0.3,
         directionalOffsetThreshold: 80
@@ -164,6 +185,9 @@ export default function ViewChecklist() {
                     {/* <Pressable onPress={shareChecklist}>
                         <MaterialCommunityIcons name="share" size={40} color="white"/>
                     </Pressable> */}
+                    <Pressable onPress={() => exportChecklist()}>
+                        <MaterialCommunityIcons name="share" size={40} color="white"/>
+                    </Pressable>
                     <Pressable onPress={() => router.push("/(tabs)/checklists")} style={styles.exitButton}>
                         <Text style={styles.exitButtonText}>Exit</Text>
                     </Pressable>
